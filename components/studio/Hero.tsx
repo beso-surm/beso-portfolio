@@ -11,6 +11,17 @@ import Pressable from "@/components/motion/Pressable";
 import { spring } from "@/lib/motion";
 import { whatsappLink } from "@/lib/site";
 
+// — სათაურის ტრიტმენტი: სიტყვები სათითაოდ ამოდიან ქვემოდან, აქცენტ-სიტყვას კი
+//   ბოლოს ემატება გრადიენტი + ხელით „დახაზული“ ხაზგასმა. მხოლოდ transform/opacity.
+const headlineContainer = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.08, delayChildren: 0.12 } },
+};
+const headlineWord = {
+  hidden: { opacity: 0, y: "0.7em" },
+  show: { opacity: 1, y: 0, transition: spring.gentle },
+};
+
 // გმირი-სექცია (The Hook). გადახვევისას ტექსტი ნაზად ქრება და პატარავდება,
 // ფონის ნათება კი ოდნავ ჩამორჩება (parallax) — ეს ხელს უწყობს ქვემოთ გადახვევას.
 // მკაცრად მხოლოდ transform/opacity — layout-ის გადათვლის გარეშე.
@@ -45,7 +56,7 @@ export default function Hero() {
         className="pointer-events-none absolute -top-[20%] left-1/2 -z-10 h-[78vh] w-[78vh] -translate-x-1/2 rounded-full bg-accent/20 blur-[130px]"
       />
 
-      <motion.div style={contentStyle} className="mx-auto w-full max-w-2xl">
+      <motion.div style={contentStyle} className="mx-auto w-full max-w-3xl">
         <motion.p
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
@@ -56,16 +67,51 @@ export default function Hero() {
           ვებ-სტუდია · ქუთაისი
         </motion.p>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ ...spring.gentle, delay: 0.12 }}
-          className="font-serif text-[2.75rem] font-bold leading-[1.04] tracking-tight text-mist sm:text-6xl"
-        >
-          ვქმნით საიტებს,
-          <br className="hidden sm:block" /> რომლებსაც{" "}
-          <span className="text-accent">ამჩნევენ</span>.
-        </motion.h1>
+        {reduce ? (
+          <h1 className="font-serif text-[2.75rem] font-bold leading-[1.04] tracking-tight text-mist sm:text-5xl lg:text-6xl">
+            ვქმნით საიტებს,
+            <br className="hidden sm:block" /> რომლებსაც{" "}
+            <span className="bg-gradient-to-r from-accent to-accent-2 bg-clip-text text-transparent">
+              ამჩნევენ
+            </span>
+            .
+          </h1>
+        ) : (
+          <motion.h1
+            variants={headlineContainer}
+            initial="hidden"
+            animate="show"
+            className="font-serif text-[2.75rem] font-bold leading-[1.04] tracking-tight text-mist sm:text-5xl lg:text-6xl"
+          >
+            <motion.span variants={headlineWord} className="inline-block">
+              ვქმნით
+            </motion.span>{" "}
+            <motion.span variants={headlineWord} className="inline-block">
+              საიტებს,
+            </motion.span>
+            <br className="hidden sm:block" />{" "}
+            <motion.span variants={headlineWord} className="inline-block">
+              რომლებსაც
+            </motion.span>{" "}
+            {/* აქცენტ-სიტყვა + წერტილი ერთ ატომურ ბლოკში — წერტილი ვერასდროს „გადახტება“ ახალ ხაზზე */}
+            <motion.span variants={headlineWord} className="inline-block">
+              <span className="relative inline-block">
+                <span className="inline-block bg-gradient-to-r from-accent to-accent-2 bg-clip-text text-transparent">
+                  ამჩნევენ
+                </span>
+                {/* ხელით დახაზული ხაზგასმა — ბოლოს „იხატება“ მარცხნიდან მარჯვნივ */}
+                <motion.span
+                  aria-hidden
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{ ...spring.snappy, delay: 0.85 }}
+                  className="absolute -bottom-1 left-0 right-0 h-[3px] origin-left rounded-full bg-gradient-to-r from-accent to-accent-2"
+                />
+              </span>
+              .
+            </motion.span>
+          </motion.h1>
+        )}
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}

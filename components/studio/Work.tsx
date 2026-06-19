@@ -17,6 +17,9 @@ type Project = {
   href?: string;
   monogram: string;
   gradient: string;
+  image?: string;
+  /** object-position for the screenshot crop (default: center) */
+  position?: string;
 };
 
 const projects: Project[] = [
@@ -26,6 +29,7 @@ const projects: Project[] = [
     href: "https://georgianhousekutaisi.com",
     monogram: "GH",
     gradient: "from-[#7a2a33] via-[#3a1a1f] to-[#0f0c0d]",
+    image: "/work/georgian-house.jpg",
   },
   {
     name: "Kvirike Hills",
@@ -33,6 +37,7 @@ const projects: Project[] = [
     href: "https://kvirikehills.com",
     monogram: "KH",
     gradient: "from-[#1f4d3a] via-[#13261f] to-[#0b0f0d]",
+    image: "/work/kvirike-hills.jpg",
   },
 ];
 
@@ -64,11 +69,22 @@ export default function Work() {
               className="group block overflow-hidden rounded-3xl border border-white/10 bg-ink-soft"
             >
               <div
-                className={`relative flex aspect-[16/10] items-center justify-center bg-gradient-to-br ${p.gradient}`}
+                className={`relative flex aspect-[16/10] items-center justify-center overflow-hidden bg-gradient-to-br ${p.gradient}`}
               >
-                <span className="font-serif text-6xl font-bold tracking-tight text-white/90">
-                  {p.monogram}
-                </span>
+                {p.image ? (
+                  <img
+                    src={p.image}
+                    alt={`${p.name} — ${p.kind}`}
+                    loading="lazy"
+                    decoding="async"
+                    className="absolute inset-0 h-full w-full object-cover"
+                    style={p.position ? { objectPosition: p.position } : undefined}
+                  />
+                ) : (
+                  <span className="font-serif text-6xl font-bold tracking-tight text-white/90">
+                    {p.monogram}
+                  </span>
+                )}
               </div>
 
               <div className="flex items-center justify-between gap-4 px-6 py-5">

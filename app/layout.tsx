@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Noto_Sans_Georgian, Noto_Serif_Georgian } from "next/font/google";
 import "./globals.css";
+import SmoothScroll from "@/components/studio/SmoothScroll";
 
 const notoGeorgian = Noto_Sans_Georgian({
   variable: "--font-noto-georgian",
@@ -54,8 +55,8 @@ export default function RootLayout({
       lang="ka"
       className={`${notoGeorgian.variable} ${notoSerifGeorgian.variable} h-full scroll-smooth antialiased`}
     >
-      <body className="min-h-full bg-white font-sans text-stone-900">
-        {children}
+      <body className="min-h-full bg-ink font-sans text-mist antialiased">
+        <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>
   );

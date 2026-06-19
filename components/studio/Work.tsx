@@ -34,12 +34,6 @@ const projects: Project[] = [
     monogram: "KH",
     gradient: "from-[#1f4d3a] via-[#13261f] to-[#0b0f0d]",
   },
-  {
-    name: "Submarine Coffee",
-    kind: "კაფე · ბათუმი",
-    monogram: "SC",
-    gradient: "from-[#16405c] via-[#102634] to-[#0a0f14]",
-  },
 ];
 
 export default function Work() {
@@ -59,54 +53,38 @@ export default function Work() {
           viewport={viewportOnce}
           className="mt-12 grid gap-5 md:grid-cols-2"
         >
-          {projects.map((p, i) => {
-            const isLink = Boolean(p.href);
-            const Card = isLink ? motion.a : motion.div;
-            const linkProps = isLink
-              ? { href: p.href, target: "_blank", rel: "noopener noreferrer" }
-              : {};
-
-            return (
-              <Card
-                key={p.name}
-                {...linkProps}
-                variants={staggerItem}
-                whileTap={tapScaleSubtle}
-                className={`group block overflow-hidden rounded-3xl border border-white/10 bg-ink-soft ${
-                  // პირველ ბარათს დესკტოპზე ვუტოვებთ მთელ სიგანეს — ასიმეტრიული აქცენტი
-                  i === 0 ? "md:col-span-2" : ""
-                }`}
+          {projects.map((p) => (
+            <motion.a
+              key={p.name}
+              href={p.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              variants={staggerItem}
+              whileTap={tapScaleSubtle}
+              className="group block overflow-hidden rounded-3xl border border-white/10 bg-ink-soft"
+            >
+              <div
+                className={`relative flex aspect-[16/10] items-center justify-center bg-gradient-to-br ${p.gradient}`}
               >
-                <div
-                  className={`relative flex aspect-[16/10] items-center justify-center bg-gradient-to-br ${p.gradient}`}
-                >
-                  <span className="font-serif text-6xl font-bold tracking-tight text-white/90">
-                    {p.monogram}
-                  </span>
-                  {!isLink && (
-                    <span className="absolute right-4 top-4 rounded-full border border-white/20 px-2.5 py-1 text-[10px] uppercase tracking-widest text-white/80">
-                      მალე ონლაინ
-                    </span>
-                  )}
-                </div>
+                <span className="font-serif text-6xl font-bold tracking-tight text-white/90">
+                  {p.monogram}
+                </span>
+              </div>
 
-                <div className="flex items-center justify-between gap-4 px-6 py-5">
-                  <div>
-                    <h3 className="text-lg font-semibold text-mist">{p.name}</h3>
-                    <p className="mt-1 text-sm text-mist-dim">{p.kind}</p>
-                  </div>
-                  {isLink && (
-                    <span
-                      aria-hidden
-                      className="text-mist-dim transition-transform duration-300 group-active:translate-x-1"
-                    >
-                      ↗
-                    </span>
-                  )}
+              <div className="flex items-center justify-between gap-4 px-6 py-5">
+                <div>
+                  <h3 className="text-lg font-semibold text-mist">{p.name}</h3>
+                  <p className="mt-1 text-sm text-mist-dim">{p.kind}</p>
                 </div>
-              </Card>
-            );
-          })}
+                <span
+                  aria-hidden
+                  className="text-mist-dim transition-transform duration-300 group-active:translate-x-1"
+                >
+                  ↗
+                </span>
+              </div>
+            </motion.a>
+          ))}
         </motion.div>
       </div>
     </section>

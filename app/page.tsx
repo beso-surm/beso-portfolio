@@ -1,35 +1,35 @@
-import About from "@/components/About";
-import AuditCTA from "@/components/AuditCTA";
-import Contact from "@/components/Contact";
-import FAQ from "@/components/FAQ";
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
-import Hero from "@/components/Hero";
-import Portfolio from "@/components/Portfolio";
-import Pricing from "@/components/Pricing";
-import Process from "@/components/Process";
-import Services from "@/components/Services";
-import StickyContact from "@/components/StickyContact";
-import WhyWebsite from "@/components/WhyWebsite";
+import LiquidBackground from "@/components/studio/LiquidBackground";
+import ScrollProgress from "@/components/studio/ScrollProgress";
+import Nav from "@/components/studio/Nav";
+import Hero from "@/components/studio/Hero";
+import Services from "@/components/studio/Services";
+import VelocityMarquee from "@/components/studio/VelocityMarquee";
+import Work from "@/components/studio/Work";
+import Process from "@/components/studio/Process";
+import Pricing from "@/components/studio/Pricing";
+import About from "@/components/studio/About";
+import ContactCTA from "@/components/studio/ContactCTA";
+import Footer from "@/components/studio/Footer";
+import StickyCta from "@/components/studio/StickyCta";
 
 export default function Home() {
   return (
     <>
-      <Header />
+      <LiquidBackground />
+      <ScrollProgress />
+      <Nav />
       <main>
         <Hero />
         <Services />
-        <Portfolio />
-        <WhyWebsite />
-        <AuditCTA />
-        <Pricing />
+        <VelocityMarquee />
+        <Work />
         <Process />
+        <Pricing />
         <About />
-        <FAQ />
-        <Contact />
+        <ContactCTA />
       </main>
       <Footer />
-      <StickyContact />
+      <StickyCta />
     </>
   );
 }

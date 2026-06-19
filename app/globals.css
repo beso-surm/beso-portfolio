@@ -3,13 +3,46 @@
 @theme inline {
   --font-sans: var(--font-noto-georgian), system-ui, sans-serif;
   --font-serif: var(--font-noto-serif-georgian), Georgia, serif;
-  /* ღვინისფერი აქცენტი — თბილი, ქართული, არა "SaaS-ისფერი" */
-  --color-accent: #80303c;
-  --color-accent-dark: #66242e;
-  --color-accent-soft: #f9f1ef;
-  --color-accent-light: #e0a9ae;
+
+  /* ბნელი პრემიუმ პალიტრა — მაღალი კონტრასტი, კარგი წაკითხვადობა ღია ცის ქვეშაც */
+  --color-ink: #0a0a0b; /* ფონი */
+  --color-ink-soft: #131316; /* ბარათები */
+  --color-ink-panel: #1b1b21; /* ამაღლებული ზედაპირები */
+  --color-mist: #f6f5f4; /* მთავარი ტექსტი */
+  --color-mist-dim: #a7a6ac; /* მეორეხარისხოვანი ტექსტი */
+
+  /* ღვინისფერი → ვარდისფერი აქცენტი, გაკაშკაშებული ბნელ ფონზე წასაკითხად */
+  --color-accent: #d24d63;
+  --color-accent-2: #e0a9ae;
 }
 
 html {
-  color-scheme: light;
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--color-ink);
+}
+
+::selection {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+/* Lenis ნაკადური გადახვევა */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
 }

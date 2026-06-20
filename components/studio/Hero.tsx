@@ -153,7 +153,7 @@ export default function Hero() {
         className="absolute inset-x-0 bottom-7 mx-auto flex flex-col items-center gap-2 text-mist-dim"
       >
         <span className="text-[10px] uppercase tracking-[0.25em]">
-          გადააქვით ქვემოთ
+          გადაახვიეთ ქვემოთ
         </span>
         <motion.span
           animate={reduce ? undefined : { y: [0, 8, 0] }}

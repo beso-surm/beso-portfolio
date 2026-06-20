@@ -119,8 +119,8 @@ export default function Hero() {
           transition={{ ...spring.gentle, delay: 0.2 }}
           className="mt-6 max-w-md text-lg leading-relaxed text-mist-dim"
         >
-          პრემიუმ ვებსაიტები სასტუმროებისთვის, რესტორნებისა და ბრენდებისთვის —
-          სწრაფი, მობილური და გაყიდვებზე ორიენტირებული.
+          პრემიუმ ვებსაიტები სასტუმროების, რესტორნებისა და ბრენდებისთვის —
+          სწრაფი, მობილური და შედეგზე ორიენტირებული.
         </motion.p>
 
         <motion.div

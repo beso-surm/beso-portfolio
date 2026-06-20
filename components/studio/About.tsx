@@ -1,7 +1,7 @@
 import Reveal from "@/components/motion/Reveal";
 import WordReveal from "@/components/motion/WordReveal";
 
-const chips = ["Next.js", "მობილური-პირველი", "ქუთაისი", "სწრაფი მხარდაჭერა"];
+const chips = ["Next.js", "მობილურზე მორგებული", "ქუთაისი", "სწრაფი მხარდაჭერა"];
 
 export default function About() {
   return (

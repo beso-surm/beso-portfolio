@@ -9,11 +9,12 @@ import {
 } from "@/lib/motion";
 import SectionHead from "@/components/studio/SectionHead";
 import Pressable from "@/components/motion/Pressable";
+import CountUp from "@/components/motion/CountUp";
 
 const packages = [
   {
     name: "სავიზიტო გვერდი",
-    price: "600₾-დან",
+    priceFrom: 600,
     description:
       "ერთგვერდიანი თანამედროვე საიტი მცირე ბიზნესისთვის, რომელსაც სწრაფად სჭირდება ონლაინ წარმომადგენლობა.",
     features: [
@@ -27,7 +28,7 @@ const packages = [
   },
   {
     name: "სტანდარტული საიტი",
-    price: "1000₾-დან",
+    priceFrom: 1000,
     description:
       "სრულფასოვანი ვებსაიტი სასტუმროსთვის, კოტეჯისთვის ან რესტორნისთვის — ყველაზე ხშირად ამას ირჩევენ.",
     features: [
@@ -42,7 +43,7 @@ const packages = [
   },
   {
     name: "პრემიუმ საიტი",
-    price: "1500₾-დან",
+    priceFrom: 1500,
     description:
       "ყველაფერი სტანდარტული პაკეტიდან და დამატებით — ადმინ პანელი: ფასებსა და ფოტოებს თავად განაახლებთ, როცა გინდათ.",
     features: [
@@ -111,7 +112,7 @@ export default function Pricing() {
                 )}
                 <h3 className="text-base font-semibold text-mist">{pkg.name}</h3>
                 <p className="mt-3 font-serif text-4xl font-bold tracking-tight text-mist">
-                  {pkg.price}
+                  <CountUp value={pkg.priceFrom} suffix="₾-დან" />
                 </p>
                 <p className="mt-3 text-sm leading-6 text-mist-dim">
                   {pkg.description}
@@ -126,6 +127,7 @@ export default function Pricing() {
                 </ul>
                 <Pressable
                   href="#contact"
+                  magnetic
                   className={`mt-auto inline-flex min-h-[48px] items-center justify-center rounded-full px-6 text-sm font-semibold ${
                     pkg.featured
                       ? "bg-accent text-white shadow-lg shadow-accent/25"

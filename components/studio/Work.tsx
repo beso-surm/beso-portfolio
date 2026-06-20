@@ -1,24 +1,19 @@
 "use client";
 
 import { motion } from "motion/react";
-import {
-  staggerContainer,
-  staggerItem,
-  tapScaleSubtle,
-  viewportOnce,
-} from "@/lib/motion";
+import { staggerContainer, viewportOnce } from "@/lib/motion";
 import SectionHead from "@/components/studio/SectionHead";
+import ProjectCard from "@/components/studio/ProjectCard";
 
 // რეალური ცოცხალი პროექტები. მობილურზე — სუფთა ვერტიკალური წყობა,
-// დესკტოპზე — ორსვეტიანი კრეატიული ბადე.
+// დესკტოპზე — ორსვეტიანი ბადე 3D-დახრადი ბარათებით.
 type Project = {
   name: string;
   kind: string;
-  href?: string;
+  href: string;
   monogram: string;
   gradient: string;
   image?: string;
-  /** object-position for the screenshot crop (default: center) */
   position?: string;
 };
 
@@ -59,47 +54,7 @@ export default function Work() {
           className="mt-12 grid gap-5 md:grid-cols-2"
         >
           {projects.map((p) => (
-            <motion.a
-              key={p.name}
-              href={p.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              variants={staggerItem}
-              whileTap={tapScaleSubtle}
-              className="group block overflow-hidden rounded-3xl border border-white/10 bg-ink-soft"
-            >
-              <div
-                className={`relative flex aspect-[16/10] items-center justify-center overflow-hidden bg-gradient-to-br ${p.gradient}`}
-              >
-                {p.image ? (
-                  <img
-                    src={p.image}
-                    alt={`${p.name} — ${p.kind}`}
-                    loading="lazy"
-                    decoding="async"
-                    className="absolute inset-0 h-full w-full object-cover"
-                    style={p.position ? { objectPosition: p.position } : undefined}
-                  />
-                ) : (
-                  <span className="font-serif text-6xl font-bold tracking-tight text-white/90">
-                    {p.monogram}
-                  </span>
-                )}
-              </div>
-
-              <div className="flex items-center justify-between gap-4 px-6 py-5">
-                <div>
-                  <h3 className="text-lg font-semibold text-mist">{p.name}</h3>
-                  <p className="mt-1 text-sm text-mist-dim">{p.kind}</p>
-                </div>
-                <span
-                  aria-hidden
-                  className="text-mist-dim transition-transform duration-300 group-active:translate-x-1"
-                >
-                  ↗
-                </span>
-              </div>
-            </motion.a>
+            <ProjectCard key={p.name} {...p} />
           ))}
         </motion.div>
       </div>

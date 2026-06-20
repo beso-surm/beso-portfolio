@@ -10,6 +10,7 @@ import {
 import Pressable from "@/components/motion/Pressable";
 import { spring } from "@/lib/motion";
 import { whatsappLink } from "@/lib/site";
+import { usePointerParallax } from "@/lib/usePointerParallax";
 
 // — სათაურის ტრიტმენტი: სიტყვები სათითაოდ ამოდიან ქვემოდან, აქცენტ-სიტყვას კი
 //   ბოლოს ემატება გრადიენტი + ხელით „დახაზული“ ხაზგასმა. მხოლოდ transform/opacity.
@@ -39,6 +40,11 @@ export default function Hero() {
   const glowY = useTransform(scrollYProgress, [0, 1], [0, 140]);
   const cueOpacity = useTransform(scrollYProgress, [0, 0.12], [1, 0]);
 
+  // კურსორზე რეაქცია — ნათება ნაზად მიჰყვება მაჩვენებელს (დესკტოპი).
+  const { x: ptrX, y: ptrY } = usePointerParallax();
+  const glowPX = useTransform(ptrX, [-1, 1], [-55, 55]);
+  const glowY2 = useTransform(() => glowY.get() + ptrY.get() * 35);
+
   const contentStyle = reduce
     ? undefined
     : { opacity: textOpacity, scale: textScale, y: textY };
@@ -49,12 +55,16 @@ export default function Hero() {
       id="top"
       className="relative flex min-h-[100svh] items-center overflow-hidden px-5 pb-20 pt-28"
     >
-      {/* ფონის ნათება — მსუბუქი parallax */}
-      <motion.div
+      {/* ფონის ნათება — სქროლზე parallax + კურსორზე რეაქცია */}
+      <div
         aria-hidden
-        style={reduce ? undefined : { y: glowY }}
-        className="pointer-events-none absolute -top-[20%] left-1/2 -z-10 h-[78vh] w-[78vh] -translate-x-1/2 rounded-full bg-accent/20 blur-[130px]"
-      />
+        className="pointer-events-none absolute -top-[20%] left-1/2 -z-10 -translate-x-1/2"
+      >
+        <motion.div
+          style={reduce ? undefined : { x: glowPX, y: glowY2 }}
+          className="h-[78vh] w-[78vh] rounded-full bg-accent/20 blur-[130px]"
+        />
+      </div>
 
       <motion.div style={contentStyle} className="mx-auto w-full max-w-3xl">
         <motion.p
@@ -132,6 +142,7 @@ export default function Hero() {
           <Pressable
             href={whatsappLink}
             external
+            magnetic
             className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full bg-accent px-7 text-base font-semibold text-white shadow-lg shadow-accent/25"
           >
             დავიწყოთ პროექტი

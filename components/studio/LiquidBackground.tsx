@@ -1,9 +1,11 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { motion, useReducedMotion, useTransform } from "motion/react";
+import { usePointerParallax } from "@/lib/usePointerParallax";
 
 // გლობალური "თხევადი" ფონი — ნელა მცურავი, მორფირებადი ფერადი ნათებები მთელ გვერდზე.
-// მხოლოდ transform (translate/scale) — დაბლერილი ფენა ერთხელ იხატება და მერე უბრალოდ გარდაიქმნება (GPU).
+// დესკტოპზე ნათებები კურსორსაც „რეაგირებენ“ (სხვადასხვა სიღრმით) — გვერდი ცოცხლდება.
+// მხოლოდ transform (translate/scale) — დაბლერილი ფენა ერთხელ იხატება (GPU).
 const blobs = [
   {
     c: "left-[-12%] top-[6%] h-[46vh] w-[46vh] bg-accent/20",
@@ -24,6 +26,20 @@ const blobs = [
 
 export default function LiquidBackground() {
   const reduce = useReducedMotion();
+  const { x, y } = usePointerParallax(40, 16);
+
+  // თითო ნათებას სხვადასხვა სიღრმის parallax — ფიქსირებული hook-ები (3 ბლობი).
+  const x0 = useTransform(x, [-1, 1], [-35, 35]);
+  const y0 = useTransform(y, [-1, 1], [-28, 28]);
+  const x1 = useTransform(x, [-1, 1], [55, -55]);
+  const y1 = useTransform(y, [-1, 1], [40, -40]);
+  const x2 = useTransform(x, [-1, 1], [-24, 24]);
+  const y2 = useTransform(y, [-1, 1], [20, -20]);
+  const offsets = [
+    { x: x0, y: y0 },
+    { x: x1, y: y1 },
+    { x: x2, y: y2 },
+  ];
 
   return (
     <div
@@ -33,15 +49,20 @@ export default function LiquidBackground() {
       {blobs.map((b, i) => (
         <motion.div
           key={i}
-          className={`absolute rounded-full blur-[90px] ${b.c}`}
-          animate={reduce ? undefined : b.a}
-          transition={{
-            duration: b.d,
-            repeat: Infinity,
-            repeatType: "loop",
-            ease: "easeInOut",
-          }}
-        />
+          className="absolute inset-0"
+          style={reduce ? undefined : { x: offsets[i].x, y: offsets[i].y }}
+        >
+          <motion.div
+            className={`absolute rounded-full blur-[90px] ${b.c}`}
+            animate={reduce ? undefined : b.a}
+            transition={{
+              duration: b.d,
+              repeat: Infinity,
+              repeatType: "loop",
+              ease: "easeInOut",
+            }}
+          />
+        </motion.div>
       ))}
     </div>
   );

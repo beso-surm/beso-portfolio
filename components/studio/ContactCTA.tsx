@@ -30,6 +30,7 @@ export default function ContactCTA() {
             <Pressable
               href={whatsappLink}
               external
+              magnetic
               className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-full bg-accent px-7 text-base font-semibold text-white shadow-lg shadow-accent/25 sm:w-auto"
             >
               WhatsApp-ით მოწერა

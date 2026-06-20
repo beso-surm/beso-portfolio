@@ -38,7 +38,7 @@ const projects: Project[] = [
 
 export default function Work() {
   return (
-    <section id="work" className="px-5 py-24">
+    <section id="work" className="bg-page px-5 py-24">
       <div className="mx-auto max-w-6xl">
         <SectionHead
           eyebrow="ნამუშევრები"

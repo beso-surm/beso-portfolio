@@ -5,8 +5,8 @@ import { site, whatsappLink, instagramLink } from "@/lib/site";
 // დასკვნითი მოწოდება — დიდი განცხადება და ცხელი ღილაკები (ტაქტილური უკუკავშირით).
 export default function ContactCTA() {
   return (
-    <section id="contact" className="px-5 py-24">
-      <div className="relative mx-auto max-w-4xl overflow-hidden rounded-[2rem] border border-white/10 bg-ink-soft px-6 py-16 text-center sm:px-12">
+    <section id="contact" className="bg-page px-5 py-24">
+      <div className="relative mx-auto max-w-4xl overflow-hidden rounded-[2rem] border border-white/10 bg-ink px-6 py-16 text-center sm:px-12">
         <div
           aria-hidden
           className="pointer-events-none absolute -top-1/3 left-1/2 -z-0 h-[60vh] w-[60vh] -translate-x-1/2 rounded-full bg-accent/15 blur-[120px]"

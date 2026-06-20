@@ -20,11 +20,11 @@ export default function SectionHead({
       >
         {eyebrow}
       </Reveal>
-      <h2 className="mt-4 font-serif text-3xl font-bold leading-tight tracking-tight text-mist sm:text-4xl">
+      <h2 className="mt-4 font-serif text-3xl font-bold leading-tight tracking-tight text-slate sm:text-4xl">
         <WordReveal text={title} />
       </h2>
       {subtitle && (
-        <Reveal as="p" className="mt-4 text-base leading-7 text-mist-dim">
+        <Reveal as="p" className="mt-4 text-base leading-7 text-slate-dim">
           {subtitle}
         </Reveal>
       )}

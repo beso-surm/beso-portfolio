@@ -4,20 +4,27 @@
   --font-sans: var(--font-noto-georgian), system-ui, sans-serif;
   --font-serif: var(--font-noto-serif-georgian), Georgia, serif;
 
-  /* ბნელი პრემიუმ პალიტრა — მაღალი კონტრასტი, კარგი წაკითხვადობა ღია ცის ქვეშაც */
-  --color-ink: #0a0a0b; /* ფონი */
-  --color-ink-soft: #131316; /* ბარათები */
-  --color-ink-panel: #1b1b21; /* ამაღლებული ზედაპირები */
-  --color-mist: #f6f5f4; /* მთავარი ტექსტი */
-  --color-mist-dim: #a7a6ac; /* მეორეხარისხოვანი ტექსტი */
+  /* გმირი-სექციის ბნელი ფენა */
+  --color-ink: #0F172A;
+  --color-ink-soft: #1E293B;
+  --color-ink-panel: #243044;
+  --color-mist: #f6f5f4;
+  --color-mist-dim: #94A3B8;
 
-  /* ღვინისფერი → ვარდისფერი აქცენტი, გაკაშკაშებული ბნელ ფონზე წასაკითხად */
-  --color-accent: #d24d63;
-  --color-accent-2: #e0a9ae;
+  /* ღია გვერდის ფენა */
+  --color-page: #F8FAFC;
+  --color-card: #FFFFFF;
+  --color-border: #E2E8F0;
+  --color-slate: #0F172A;
+  --color-slate-dim: #64748B;
+
+  /* ნარინჯისფერი CTA — კონვერსიაზე ორიენტირებული */
+  --color-accent: #EA580C;
+  --color-accent-2: #FB923C;
 }
 
 html {
-  color-scheme: dark;
+  color-scheme: light dark;
 }
 
 body {

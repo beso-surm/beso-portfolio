@@ -5,7 +5,7 @@ const chips = ["Next.js", "მობილურზე მორგებულ�
 
 export default function About() {
   return (
-    <section id="about" className="px-5 py-24">
+    <section id="about" className="bg-page px-5 py-24">
       <div className="mx-auto max-w-4xl">
         <div className="grid gap-8 sm:grid-cols-[auto_1fr] sm:items-start sm:gap-10">
           <Reveal>
@@ -21,18 +21,18 @@ export default function About() {
             >
               ჩემ შესახებ
             </Reveal>
-            <h2 className="mt-3 font-serif text-3xl font-bold tracking-tight text-mist sm:text-4xl">
+            <h2 className="mt-3 font-serif text-3xl font-bold tracking-tight text-slate sm:text-4xl">
               <WordReveal text="გამარჯობა, მე ბესო ვარ" />
             </h2>
-            <Reveal as="p" className="mt-4 text-base leading-7 text-mist-dim">
+            <Reveal as="p" className="mt-4 text-base leading-7 text-slate-dim">
               ვებ-დეველოპერი ვარ ქუთაისიდან და ვქმნი პრაქტიკულ, თანამედროვე
               ვებსაიტებს ქართული ბიზნესებისთვის — ძირითადად სასტუმროებისთვის,
               კოტეჯებისთვის და რესტორნებისთვის. ვმუშაობ უახლესი ხელსაწყოებით,
               ვპასუხობ სწრაფად და თითოეული პროექტი ჩემთვის მთავარი საქმეა.
             </Reveal>
-            <Reveal as="p" className="mt-3 text-base leading-7 text-mist-dim">
+            <Reveal as="p" className="mt-3 text-base leading-7 text-slate-dim">
               კარგად ვიცნობ ადგილობრივ ტურიზმს, ამიტომ ვაკეთებ არა უბრალოდ „ლამაზ
-              საიტებს“, არამედ ისეთებს, რომლებიც სტუმრისთვის გასაგებია და რეალურ
+              საიტებს", არამედ ისეთებს, რომლებიც სტუმრისთვის გასაგებია და რეალურ
               შედეგზეა ორიენტირებული — მეტი შეტყობინება, მეტი ჯავშანი, მეტი ნდობა.
             </Reveal>
 
@@ -40,7 +40,7 @@ export default function About() {
               {chips.map((chip) => (
                 <span
                   key={chip}
-                  className="rounded-full border border-white/10 bg-ink-soft px-3 py-1.5 text-xs text-mist-dim"
+                  className="rounded-full border border-border bg-card px-3 py-1.5 text-xs text-slate-dim"
                 >
                   {chip}
                 </span>

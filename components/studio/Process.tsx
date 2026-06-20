@@ -40,7 +40,6 @@ const steps = [
 export default function Process() {
   const ref = useRef<HTMLOListElement>(null);
   const reduce = useReducedMotion();
-  // ხაზი "იხატება" გადახვევისას — სკროლზე მიბმული scaleY (transform).
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start 70%", "end 85%"],
@@ -48,7 +47,7 @@ export default function Process() {
   const lineScale = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   return (
-    <section id="process" className="px-5 py-24">
+    <section id="process" className="bg-page px-5 py-24">
       <div className="mx-auto max-w-3xl">
         <SectionHead
           eyebrow="პროცესი"
@@ -64,12 +63,10 @@ export default function Process() {
           viewport={viewportOnce}
           className="relative mt-12 space-y-8"
         >
-          {/* ხაზის ბილიკი */}
           <span
             aria-hidden
-            className="absolute bottom-5 left-[19px] top-5 w-px bg-white/10"
+            className="absolute bottom-5 left-[19px] top-5 w-px bg-slate/10"
           />
-          {/* ხაზის შევსება — გადახვევაზე იზრდება */}
           <motion.span
             aria-hidden
             style={reduce ? undefined : { scaleY: lineScale }}
@@ -82,12 +79,12 @@ export default function Process() {
               variants={staggerItem}
               className="relative flex gap-5"
             >
-              <span className="z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-accent/40 bg-ink text-sm font-bold text-accent">
+              <span className="z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-accent/40 bg-white text-sm font-bold text-accent shadow-sm">
                 {i + 1}
               </span>
               <div className="pt-1.5">
-                <h3 className="text-lg font-semibold text-mist">{step.title}</h3>
-                <p className="mt-1.5 text-sm leading-6 text-mist-dim">
+                <h3 className="text-lg font-semibold text-slate">{step.title}</h3>
+                <p className="mt-1.5 text-sm leading-6 text-slate-dim">
                   {step.description}
                 </p>
               </div>

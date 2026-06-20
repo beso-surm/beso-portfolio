@@ -74,7 +74,7 @@ const Check = () => (
 
 export default function Pricing() {
   return (
-    <section id="pricing" className="px-5 py-24">
+    <section id="pricing" className="bg-page px-5 py-24">
       <div className="mx-auto max-w-6xl">
         <SectionHead
           eyebrow="ფასები"
@@ -90,8 +90,6 @@ export default function Pricing() {
           className="mt-12 grid items-start gap-5 lg:grid-cols-3"
         >
           {packages.map((pkg) => (
-            // featured ბარათს დესკტოპზე ვწევთ ზევით — lift ცალკე ფენაზეა, რომ
-            // whileTap-ის transform-ს არ შეეჯახოს.
             <div
               key={pkg.name}
               className={pkg.featured ? "lg:-translate-y-3" : ""}
@@ -101,8 +99,8 @@ export default function Pricing() {
                 whileTap={tapScaleSubtle}
                 className={`relative flex h-full flex-col rounded-3xl border p-7 ${
                   pkg.featured
-                    ? "border-accent/60 bg-ink-soft shadow-2xl shadow-accent/15"
-                    : "border-white/10 bg-ink-soft"
+                    ? "border-accent/60 bg-white shadow-2xl shadow-accent/15"
+                    : "border-border bg-card shadow-sm"
                 }`}
               >
                 {pkg.featured && (
@@ -110,14 +108,14 @@ export default function Pricing() {
                     პოპულარული არჩევანი
                   </span>
                 )}
-                <h3 className="text-base font-semibold text-mist">{pkg.name}</h3>
-                <p className="mt-3 font-serif text-4xl font-bold tracking-tight text-mist">
+                <h3 className="text-base font-semibold text-slate">{pkg.name}</h3>
+                <p className="mt-3 font-serif text-4xl font-bold tracking-tight text-slate">
                   <CountUp value={pkg.priceFrom} suffix="₾-დან" />
                 </p>
-                <p className="mt-3 text-sm leading-6 text-mist-dim">
+                <p className="mt-3 text-sm leading-6 text-slate-dim">
                   {pkg.description}
                 </p>
-                <ul className="mt-6 space-y-3 text-sm text-mist">
+                <ul className="mt-6 space-y-3 text-sm text-slate">
                   {pkg.features.map((f) => (
                     <li key={f} className="flex items-start gap-2.5">
                       <Check />
@@ -131,7 +129,7 @@ export default function Pricing() {
                   className={`mt-auto inline-flex min-h-[48px] items-center justify-center rounded-full px-6 text-sm font-semibold ${
                     pkg.featured
                       ? "bg-accent text-white shadow-lg shadow-accent/25"
-                      : "border border-white/15 text-mist"
+                      : "border border-slate/20 text-slate"
                   }`}
                 >
                   შეთავაზების მიღება
@@ -141,7 +139,7 @@ export default function Pricing() {
           ))}
         </motion.div>
 
-        <p className="mt-8 text-center text-sm text-mist-dim">
+        <p className="mt-8 text-center text-sm text-slate-dim">
           დომენი და ჰოსტინგი ცალკე ღირს (წელიწადში დაახლოებით 40–100₾) —
           ყველაფერს მე მოგიგვარებთ.
         </p>

@@ -10,7 +10,6 @@ import {
 } from "@/lib/motion";
 import SectionHead from "@/components/studio/SectionHead";
 
-// ხაზოვანი იკონები — მსუბუქი, პრემიუმ, emoji-ს გარეშე.
 const Icon = ({ d }: { d: string }) => (
   <svg
     viewBox="0 0 24 24"
@@ -51,7 +50,7 @@ const services: { title: string; desc: string; icon: ReactNode }[] = [
 
 export default function Services() {
   return (
-    <section id="services" className="px-5 py-24">
+    <section id="services" className="bg-page px-5 py-24">
       <div className="mx-auto max-w-6xl">
         <SectionHead
           eyebrow="რას ვაკეთებთ"
@@ -71,13 +70,13 @@ export default function Services() {
               key={s.title}
               variants={staggerItem}
               whileTap={tapScaleSubtle}
-              className="rounded-2xl border border-white/10 bg-ink-soft p-6"
+              className="rounded-2xl border border-border bg-card p-6 shadow-sm"
             >
               <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-accent/10 text-accent">
                 {s.icon}
               </div>
-              <h3 className="mt-5 text-lg font-semibold text-mist">{s.title}</h3>
-              <p className="mt-2 text-sm leading-6 text-mist-dim">{s.desc}</p>
+              <h3 className="mt-5 text-lg font-semibold text-slate">{s.title}</h3>
+              <p className="mt-2 text-sm leading-6 text-slate-dim">{s.desc}</p>
             </motion.li>
           ))}
         </motion.ul>

@@ -75,7 +75,7 @@ export default function VelocityMarquee({
   });
 
   return (
-    <div className="relative flex select-none overflow-hidden border-y border-white/10 py-6">
+    <div className="relative flex select-none overflow-hidden border-y border-white/10 bg-ink py-6">
       <motion.div
         className="flex flex-nowrap whitespace-nowrap"
         style={reduce ? undefined : { x }}

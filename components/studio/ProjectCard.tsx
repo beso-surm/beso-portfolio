@@ -11,10 +11,8 @@ import {
 import type { PointerEvent as ReactPointerEvent } from "react";
 import { staggerItem, tapScaleSubtle } from "@/lib/motion";
 
-// პროექტის ბარათი 3D დახრით — დესკტოპზე კურსორისკენ იხრება, ზედაპირზე კი
-// ნათების "ლაქა" მიჰყვება მაჩვენებელს. შეხებაზე (მობილური) მხოლოდ tap-ის
-// მასშტაბირება რჩება, რომ ბმულზე გადასვლა არ შეფერხდეს. transform/opacity only.
 type Props = {
+  num: string;
   name: string;
   kind: string;
   href: string;
@@ -22,9 +20,13 @@ type Props = {
   gradient: string;
   image?: string;
   position?: string;
+  outcome?: string;
 };
 
+// რედაქციული პროექტ-ბარათი — ნომერი, სათაური, სატარგო, ცოცხალი ჩარჩო.
+// დესკტოპზე — ნაზი 3D დახრა (transform only); მობილურზე — სუფთა ტაპი.
 export default function ProjectCard({
+  num,
   name,
   kind,
   href,
@@ -32,21 +34,21 @@ export default function ProjectCard({
   gradient,
   image,
   position,
+  outcome,
 }: Props) {
   const reduce = useReducedMotion();
 
-  // მაჩვენებლის პოზიცია ბარათის შიგნით: -0.5..0.5
   const px = useMotionValue(0);
   const py = useMotionValue(0);
   const sx = useSpring(px, { stiffness: 150, damping: 18, mass: 0.5 });
   const sy = useSpring(py, { stiffness: 150, damping: 18, mass: 0.5 });
 
-  const rotateX = useTransform(sy, [-0.5, 0.5], [7, -7]);
-  const rotateY = useTransform(sx, [-0.5, 0.5], [-7, 7]);
+  const rotateX = useTransform(sy, [-0.5, 0.5], [5, -5]);
+  const rotateY = useTransform(sx, [-0.5, 0.5], [-5, 5]);
 
   const sheenX = useTransform(sx, [-0.5, 0.5], ["0%", "100%"]);
   const sheenY = useTransform(sy, [-0.5, 0.5], ["0%", "100%"]);
-  const sheen = useMotionTemplate`radial-gradient(240px circle at ${sheenX} ${sheenY}, rgba(255,255,255,0.28), transparent 60%)`;
+  const sheen = useMotionTemplate`radial-gradient(280px circle at ${sheenX} ${sheenY}, rgba(255,255,255,0.22), transparent 60%)`;
 
   const onMove = (e: ReactPointerEvent<HTMLElement>) => {
     if (reduce || e.pointerType !== "mouse") return;
@@ -68,8 +70,12 @@ export default function ProjectCard({
         onPointerMove={onMove}
         onPointerLeave={reset}
         whileTap={tapScaleSubtle}
-        style={reduce ? undefined : { rotateX, rotateY, transformStyle: "preserve-3d" }}
-        className="group relative block overflow-hidden rounded-3xl border border-slate/20 bg-ink-soft"
+        style={
+          reduce
+            ? undefined
+            : { rotateX, rotateY, transformStyle: "preserve-3d" }
+        }
+        className="group relative block overflow-hidden rounded-3xl border border-line bg-card shadow-sm shadow-ink/[0.04] transition-shadow hover:shadow-xl hover:shadow-ink/10"
       >
         <div
           className={`relative flex aspect-[16/10] items-center justify-center overflow-hidden bg-gradient-to-br ${gradient}`}
@@ -89,7 +95,11 @@ export default function ProjectCard({
             </span>
           )}
 
-          {/* ნათების ლაქა — მიჰყვება კურსორს (მხოლოდ დესკტოპზე ჩანს) */}
+          {/* ნომერი — შუშის ფირფიტა */}
+          <span className="glass-dark absolute left-4 top-4 inline-flex items-center rounded-full px-3 py-1 font-serif text-xs font-bold tracking-tight text-mist">
+            {num}
+          </span>
+
           {!reduce && (
             <motion.span
               aria-hidden
@@ -99,14 +109,19 @@ export default function ProjectCard({
           )}
         </div>
 
-        <div className="flex items-center justify-between gap-4 px-6 py-5">
+        <div className="flex items-start justify-between gap-4 px-6 py-6">
           <div>
-            <h3 className="text-lg font-semibold text-mist">{name}</h3>
-            <p className="mt-1 text-sm text-mist-dim">{kind}</p>
+            <h3 className="font-serif text-2xl font-bold tracking-tight text-ink">
+              {name}
+            </h3>
+            <p className="mt-1 text-sm text-ink-soft">{kind}</p>
+            {outcome && (
+              <p className="mt-3 text-sm leading-6 text-ink-dim">{outcome}</p>
+            )}
           </div>
           <span
             aria-hidden
-            className="text-mist-dim transition-transform duration-300 group-hover:translate-x-1 group-active:translate-x-1"
+            className="mt-1.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-line text-ink transition-all duration-300 group-hover:-translate-y-0.5 group-hover:border-accent group-hover:bg-accent group-hover:text-white"
           >
             ↗
           </span>

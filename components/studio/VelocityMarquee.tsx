@@ -12,21 +12,21 @@ import {
   useVelocity,
 } from "motion/react";
 
-// მუდმივად მცურავი სიტყვების ზოლი, რომელიც გადახვევის სიჩქარეზე რეაგირებს —
-// აჩქარდება და მიმართულებას იცვლის. ეს არის "ცოცხალი", თვალში-მომხვედრი ელემენტი.
-// მთლიანად transform-ზე (x) მუშაობს — მობილურზეც გლუვია.
+// მუდმივად მცურავი სიტყვების ზოლი — გადახვევის სიჩქარეზე რეაგირებს.
+// ფონი მემკვიდრეობით ცარიელია (paper) — წერია "შავი მელნით" დიდი სერიფით.
+// მთლიანად transform-ზე (x) — გლუვია მობილურზეც.
 const wrap = (min: number, max: number, v: number) => {
   const range = max - min;
   return ((((v - min) % range) + range) % range) + min;
 };
 
 const words = [
-  "ვებ დიზაინი",
-  "დეველოპმენტი",
-  "მობილურზე მორგებული",
-  "სიჩქარე",
-  "SEO",
+  "სასტუმროები",
+  "რესტორნები",
+  "კოტეჯები",
   "ბრენდინგი",
+  "ვებსაიტები",
+  "ქუთაისი",
 ];
 
 function Row() {
@@ -34,10 +34,10 @@ function Row() {
     <span className="flex shrink-0 items-center">
       {words.map((w, i) => (
         <span key={i} className="flex items-center">
-          <span className="px-6 font-serif text-3xl font-semibold text-mist sm:text-5xl">
+          <span className="px-8 font-serif text-5xl font-bold tracking-[-0.02em] text-ink sm:text-7xl lg:text-8xl">
             {w}
           </span>
-          <span className="text-2xl text-accent sm:text-3xl">✦</span>
+          <span className="text-3xl text-accent sm:text-4xl">✦</span>
         </span>
       ))}
     </span>
@@ -61,7 +61,6 @@ export default function VelocityMarquee({
     clamp: false,
   });
 
-  // 4 ასლი, ფანჯარა 25% = ზუსტად ერთი ასლი → უწყვეტი მარყუჟი.
   const x = useTransform(baseX, (v) => `${wrap(-25, -50, v)}%`);
   const direction = useRef(1);
 
@@ -75,7 +74,7 @@ export default function VelocityMarquee({
   });
 
   return (
-    <div className="relative flex select-none overflow-hidden border-y border-white/10 bg-ink py-6">
+    <div className="relative flex select-none overflow-hidden border-y border-line py-10 sm:py-14">
       <motion.div
         className="flex flex-nowrap whitespace-nowrap"
         style={reduce ? undefined : { x }}

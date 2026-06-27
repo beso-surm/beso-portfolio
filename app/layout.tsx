@@ -70,7 +70,7 @@ export default function RootLayout({
       lang="ka"
       className={`${notoGeorgian.variable} ${notoSerifGeorgian.variable} h-full scroll-smooth antialiased`}
     >
-      <body className="min-h-full bg-ink font-sans text-mist antialiased">
+      <body className="min-h-full bg-paper font-sans text-ink antialiased">
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>

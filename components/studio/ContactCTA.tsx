@@ -2,48 +2,63 @@ import Reveal from "@/components/motion/Reveal";
 import Pressable from "@/components/motion/Pressable";
 import { site, whatsappLink, instagramLink } from "@/lib/site";
 
-// დასკვნითი მოწოდება — დიდი განცხადება და ცხელი ღილაკები (ტაქტილური უკუკავშირით).
+// კულმინაცია — დიდი, ბნელი ფირფიტა cream ფონზე. პრემიუმ კონტრასტი.
 export default function ContactCTA() {
   return (
-    <section id="contact" className="bg-page px-5 py-24">
-      <div className="relative mx-auto max-w-4xl overflow-hidden rounded-[2rem] border border-white/10 bg-ink px-6 py-16 text-center sm:px-12">
+    <section id="contact" className="px-5 py-28 sm:py-36">
+      <div className="relative mx-auto max-w-5xl overflow-hidden rounded-[2.5rem] bg-ink px-6 py-20 text-center sm:px-12">
+        {/* მსუბუქი ნათება */}
         <div
           aria-hidden
-          className="pointer-events-none absolute -top-1/3 left-1/2 -z-0 h-[60vh] w-[60vh] -translate-x-1/2 rounded-full bg-accent/15 blur-[120px]"
+          className="pointer-events-none absolute -top-1/3 left-1/2 -z-0 h-[70vh] w-[70vh] -translate-x-1/2 rounded-full bg-accent/20 blur-[140px]"
         />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -bottom-1/3 right-0 -z-0 h-[40vh] w-[40vh] rounded-full bg-accent-soft/20 blur-[120px]"
+        />
+
         <div className="relative">
-          <Reveal as="p" className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
-            მოდი ვისაუბროთ
+          <Reveal
+            as="div"
+            className="flex items-center justify-center gap-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-mist-dim"
+          >
+            <span className="font-serif text-base font-bold tracking-tight text-accent">
+              07
+            </span>
+            <span aria-hidden className="h-px w-8 bg-mist-dim/40" />
+            <span>მოდი ვისაუბროთ</span>
           </Reveal>
           <Reveal
             as="h2"
-            className="mx-auto mt-4 max-w-xl font-serif text-3xl font-bold leading-tight tracking-tight text-mist sm:text-4xl"
+            className="mx-auto mt-6 max-w-2xl font-serif text-4xl font-bold leading-[1.04] tracking-[-0.02em] text-mist sm:text-6xl lg:text-7xl"
           >
-            მზად ხართ თქვენი ბიზნესის საიტისთვის?
+            მზად ხართ თქვენი ბიზნესის{" "}
+            <em className="font-medium italic text-accent">საიტისთვის</em>?
           </Reveal>
-          <Reveal as="p" className="mx-auto mt-4 max-w-md text-base leading-7 text-mist-dim">
+          <Reveal as="p" className="mx-auto mt-6 max-w-md text-base leading-7 text-mist-dim">
             უფასო კონსულტაცია — მომწერეთ და ერთად განვიხილავთ, რა სჭირდება თქვენს
             ბიზნესს ონლაინ.
           </Reveal>
 
-          <Reveal className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <Reveal className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Pressable
               href={whatsappLink}
               external
               magnetic
-              className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-full bg-accent px-7 text-base font-semibold text-white shadow-lg shadow-accent/25 sm:w-auto"
+              className="inline-flex min-h-[56px] w-full items-center justify-center gap-2 rounded-full bg-accent px-8 text-base font-semibold text-white shadow-lg shadow-accent/30 sm:w-auto"
             >
               WhatsApp-ით მოწერა
+              <span aria-hidden>→</span>
             </Pressable>
             <Pressable
               href={site.phoneHref}
-              className="inline-flex min-h-[52px] w-full items-center justify-center rounded-full border border-white/15 px-7 text-base font-medium text-mist sm:w-auto"
+              className="inline-flex min-h-[56px] w-full items-center justify-center rounded-full border border-mist/20 px-8 text-base font-medium text-mist hover:bg-mist/10 transition-colors sm:w-auto"
             >
               {site.phoneDisplay}
             </Pressable>
           </Reveal>
 
-          <Reveal className="mt-6 flex items-center justify-center gap-5 text-sm text-mist-dim">
+          <Reveal className="mt-8 flex items-center justify-center gap-5 text-sm text-mist-dim">
             <a href={`mailto:${site.email}`} className="hover:text-mist">
               {site.email}
             </a>

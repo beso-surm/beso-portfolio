@@ -47,9 +47,10 @@ export default function Process() {
   const lineScale = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   return (
-    <section id="process" className="bg-page px-5 py-24">
+    <section id="process" className="bg-paper-soft px-5 py-28 sm:py-36">
       <div className="mx-auto max-w-3xl">
         <SectionHead
+          number="03"
           eyebrow="პროცესი"
           title="როგორ ვმუშაობ"
           subtitle="მარტივი, გასაგები ნაბიჯები — თქვენგან მხოლოდ ფოტოები და ინფორმაცია მჭირდება."
@@ -61,30 +62,30 @@ export default function Process() {
           initial="hidden"
           whileInView="show"
           viewport={viewportOnce}
-          className="relative mt-12 space-y-8"
+          className="relative mt-16 space-y-10"
         >
           <span
             aria-hidden
-            className="absolute bottom-5 left-[19px] top-5 w-px bg-slate/10"
+            className="absolute bottom-5 left-[19px] top-5 w-px bg-line"
           />
           <motion.span
             aria-hidden
             style={reduce ? undefined : { scaleY: lineScale }}
-            className="absolute bottom-5 left-[19px] top-5 w-px origin-top bg-gradient-to-b from-accent to-accent-2"
+            className="absolute bottom-5 left-[19px] top-5 w-px origin-top bg-accent"
           />
 
           {steps.map((step, i) => (
             <motion.li
               key={step.title}
               variants={staggerItem}
-              className="relative flex gap-5"
+              className="relative flex gap-6"
             >
-              <span className="z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-accent/40 bg-white text-sm font-bold text-accent shadow-sm">
-                {i + 1}
+              <span className="z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-line bg-card font-serif text-sm font-bold text-accent shadow-sm">
+                {String(i + 1).padStart(2, "0")}
               </span>
               <div className="pt-1.5">
-                <h3 className="text-lg font-semibold text-slate">{step.title}</h3>
-                <p className="mt-1.5 text-sm leading-6 text-slate-dim">
+                <h3 className="font-serif text-xl font-bold text-ink">{step.title}</h3>
+                <p className="mt-2 text-sm leading-7 text-ink-soft">
                   {step.description}
                 </p>
               </div>

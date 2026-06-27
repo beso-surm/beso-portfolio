@@ -5,9 +5,8 @@ import { motion, useMotionValue, useReducedMotion, useSpring } from "motion/reac
 import { tapScale } from "@/lib/motion";
 
 // პოლიმორფული, ტაქტილური ელემენტი — რენდერდება <a>-დ (href-ით) ან <button>-ად.
-// მთავარი დანიშნულება: ერთიანი whileTap უკუკავშირი ყველა ღილაკზე/ბმულზე,
-// hover-ზე დამოკიდებულების გარეშე (მობილური უპირველესია). `magnetic`-ით ღილაკი
-// დესკტოპზე ნაზად კურსორისკენ "მიიზიდება" (transform-ით, layout-ის შეცვლის გარეშე).
+// ერთიანი whileTap უკუკავშირი, აქცენტური focus-visible რგოლი კლავიატურის
+// ნავიგაციისთვის. `magnetic`-ით ღილაკი დესკტოპზე ნაზად კურსორისკენ "მიიზიდება".
 type Common = {
   children: ReactNode;
   className?: string;
@@ -27,6 +26,9 @@ type AsButton = Common & {
   type?: "button" | "submit";
   onClick?: () => void;
 };
+
+const focusRing =
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper";
 
 function useMagnetic(enabled?: boolean) {
   const reduce = useReducedMotion();
@@ -65,7 +67,7 @@ export default function Pressable(props: AsLink | AsButton) {
     return (
       <motion.a
         href={href}
-        className={className}
+        className={`${focusRing} ${className ?? ""}`}
         style={mag.style}
         onPointerMove={mag.onPointerMove}
         onPointerLeave={mag.onPointerLeave}
@@ -83,7 +85,7 @@ export default function Pressable(props: AsLink | AsButton) {
     <motion.button
       type={type}
       onClick={onClick}
-      className={className}
+      className={`${focusRing} ${className ?? ""}`}
       style={mag.style}
       onPointerMove={mag.onPointerMove}
       onPointerLeave={mag.onPointerLeave}

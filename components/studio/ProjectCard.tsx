@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import {
   motion,
   useMotionTemplate,
@@ -75,28 +76,31 @@ export default function ProjectCard({
             ? undefined
             : { rotateX, rotateY, transformStyle: "preserve-3d" }
         }
-        className="group relative block overflow-hidden rounded-3xl border border-line bg-card shadow-sm shadow-ink/[0.04] transition-shadow hover:shadow-xl hover:shadow-ink/10"
+        className="group relative block overflow-hidden rounded-3xl border border-line bg-card shadow-sm shadow-ink/[0.04] transition-shadow hover:shadow-xl hover:shadow-ink/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-paper"
       >
         <div
-          className={`relative flex aspect-[16/10] items-center justify-center overflow-hidden bg-gradient-to-br ${gradient}`}
+          className={`relative aspect-[16/10] overflow-hidden bg-gradient-to-br ${gradient}`}
         >
           {image ? (
-            <img
+            <Image
               src={image}
               alt={`${name} — ${kind}`}
-              loading="lazy"
-              decoding="async"
-              className="absolute inset-0 h-full w-full object-cover"
+              fill
+              sizes="(min-width: 768px) 50vw, 100vw"
+              className="object-cover"
               style={position ? { objectPosition: position } : undefined}
+              quality={85}
             />
           ) : (
-            <span className="font-serif text-6xl font-bold tracking-tight text-white/90">
-              {monogram}
-            </span>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span className="font-serif text-6xl font-bold tracking-tight text-white/90">
+                {monogram}
+              </span>
+            </div>
           )}
 
           {/* ნომერი — შუშის ფირფიტა */}
-          <span className="glass-dark absolute left-4 top-4 inline-flex items-center rounded-full px-3 py-1 font-serif text-xs font-bold tracking-tight text-mist">
+          <span className="glass-dark absolute left-4 top-4 z-10 inline-flex items-center rounded-full px-3 py-1 font-serif text-xs font-bold tracking-tight text-mist">
             {num}
           </span>
 
@@ -104,7 +108,7 @@ export default function ProjectCard({
             <motion.span
               aria-hidden
               style={{ background: sheen }}
-              className="pointer-events-none absolute inset-0 opacity-0 mix-blend-soft-light transition-opacity duration-300 group-hover:opacity-100"
+              className="pointer-events-none absolute inset-0 z-10 opacity-0 mix-blend-soft-light transition-opacity duration-300 group-hover:opacity-100"
             />
           )}
         </div>

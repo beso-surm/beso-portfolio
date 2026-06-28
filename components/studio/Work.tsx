@@ -36,7 +36,7 @@ const projects: Project[] = [
     monogram: "KH",
     gradient: "from-[#1f4d3a] via-[#13261f] to-[#0b0f0d]",
     image: "/work/kvirike-hills.jpg",
-    outcome: "ტრიენიანი საიტი ცოცხალი ჯავშნებით",
+    outcome: "სამენოვანი საიტი ცოცხალი ჯავშნებით",
   },
 ];
 

@@ -95,7 +95,7 @@ export default function Hero() {
 
         {/* რედაქციული სათაური — დიდი, ასიმეტრიული, კურსივი აქცენტი */}
         {reduce ? (
-          <h1 className="mt-10 font-serif text-[clamp(2.5rem,8.5vw,6.5rem)] font-bold leading-[1.02] tracking-[-0.02em] text-ink">
+          <h1 className="mt-10 font-serif text-[clamp(2.5rem,6.5vw,5.5rem)] font-bold leading-[1.02] tracking-[-0.02em] text-ink">
             ვებსაიტები,
             <br />
             რომლებიც <em className="font-medium italic text-accent">მუშაობს</em>
@@ -106,7 +106,7 @@ export default function Hero() {
             variants={headlineContainer}
             initial="hidden"
             animate="show"
-            className="mt-10 font-serif text-[clamp(2.5rem,8.5vw,6.5rem)] font-bold leading-[1.02] tracking-[-0.02em] text-ink"
+            className="mt-10 font-serif text-[clamp(2.5rem,6.5vw,5.5rem)] font-bold leading-[1.02] tracking-[-0.02em] text-ink"
           >
             <motion.span variants={headlineWord} className="inline-block">
               ვებსაიტები,

@@ -89,7 +89,6 @@ export default function ProjectCard({
               sizes="(min-width: 768px) 50vw, 100vw"
               className="object-cover"
               style={position ? { objectPosition: position } : undefined}
-              quality={85}
             />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center">

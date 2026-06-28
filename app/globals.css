@@ -63,6 +63,17 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
+/* რედაქციული Drop cap — პირველი ასო დიდ სერიფ-ბლოკად, აქცენტური ფერით */
+.drop-cap::first-letter {
+  float: left;
+  font-family: var(--font-serif);
+  font-size: 4.5rem;
+  line-height: 0.85;
+  font-weight: 700;
+  color: var(--color-accent);
+  margin: 0.25rem 0.6rem 0 0;
+}
+
 /* "ცოცხალი" ნათების ანიმაცია — მხოლოდ opacity (იაფი) */
 @keyframes pulseDot {
   0%, 100% { opacity: 1; }

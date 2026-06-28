@@ -28,7 +28,7 @@ export default function About() {
             <h2 className="mt-5 font-serif text-4xl font-bold tracking-[-0.02em] text-ink sm:text-5xl">
               <WordReveal text="გამარჯობა, მე ბესო ვარ" />
             </h2>
-            <Reveal as="p" className="mt-6 text-base leading-7 text-ink-soft">
+            <Reveal as="p" className="drop-cap mt-6 text-base leading-7 text-ink-soft">
               ვებ-დეველოპერი ვარ ქუთაისიდან და ვქმნი პრაქტიკულ, თანამედროვე
               ვებსაიტებს ქართული ბიზნესებისთვის — ძირითადად სასტუმროებისთვის,
               კოტეჯებისთვის და რესტორნებისთვის. ვმუშაობ უახლესი ხელსაწყოებით,

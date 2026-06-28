@@ -30,13 +30,14 @@ function useTbilisiClock() {
       const fmt = new Intl.DateTimeFormat("ka-GE", {
         hour: "2-digit",
         minute: "2-digit",
+        second: "2-digit",
         hour12: false,
         timeZone: "Asia/Tbilisi",
       });
       setTime(fmt.format(new Date()));
     };
     update();
-    const id = setInterval(update, 30_000);
+    const id = setInterval(update, 1000);
     return () => clearInterval(id);
   }, []);
   return time;
@@ -88,7 +89,8 @@ export default function Hero() {
           <span className="inline-flex items-center gap-2">
             <span className="live-dot inline-block h-1.5 w-1.5 rounded-full bg-accent" />
             <span suppressHydrationWarning>
-              თბილისი {time ?? "—"} · ხელმისაწვდომი
+              თბილისი{" "}
+              <span className="tabular-nums">{time ?? "—"}</span> · ხელმისაწვდომი
             </span>
           </span>
         </motion.div>

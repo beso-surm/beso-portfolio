@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Noto_Sans_Georgian, Noto_Serif_Georgian } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/studio/SmoothScroll";
+import { copy } from "@/lib/copy";
 
 const notoGeorgian = Noto_Sans_Georgian({
   variable: "--font-noto-georgian",
@@ -13,12 +14,21 @@ const notoSerifGeorgian = Noto_Serif_Georgian({
   subsets: ["georgian", "latin"],
 });
 
+// Default metadata = Georgian (root /). /en overrides via its own page metadata.
+const ka = copy.ka.meta;
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://besosurmava.com"),
-  alternates: { canonical: "/" },
-  title: "ბესო სურმავა — ვებსაიტები ქართული ბიზნესებისთვის",
-  description:
-    "თანამედროვე, მობილურზე მორგებული ვებსაიტები სასტუმროებისთვის, კოტეჯებისთვის, რესტორნებისთვის და მცირე ბიზნესებისთვის. ცოცხალი ნამუშევრები, გამჭვირვალე ფასები, უფასო კონსულტაცია.",
+  alternates: {
+    canonical: "/",
+    languages: {
+      "ka-GE": "/",
+      "en-US": "/en",
+      "x-default": "/",
+    },
+  },
+  title: ka.title,
+  description: ka.description,
   keywords: [
     "ვებსაიტის დამზადება",
     "სასტუმროს ვებსაიტი",
@@ -28,6 +38,8 @@ export const metadata: Metadata = {
     "საიტის გაკეთება ფასი",
     "website Georgia",
     "hotel website Kutaisi",
+    "Kutaisi web developer",
+    "hospitality website Georgia",
   ],
   verification: {
     google: "xMl73cls5EqGrBu6psLLngfytokB8reL9glsI0e13f8",
@@ -37,25 +49,24 @@ export const metadata: Metadata = {
   openGraph: {
     url: "https://besosurmava.com",
     siteName: "Beso Surmava",
-    title: "ბესო სურმავა — ვებსაიტები ქართული ბიზნესებისთვის",
-    description:
-      "თანამედროვე ვებსაიტები სასტუმროებისთვის, კოტეჯებისთვის და რესტორნებისთვის — სუფთა დიზაინი, მობილური ვერსია, მეტი ჯავშანი.",
+    title: ka.ogTitle,
+    description: ka.ogDescription,
     locale: "ka_GE",
+    alternateLocale: ["en_US"],
     type: "website",
     images: [
       {
         url: "/og.png",
         width: 1200,
         height: 630,
-        alt: "ბესო სურმავა — ვებ-სტუდია, ქუთაისი",
+        alt: ka.ogAlt,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "ბესო სურმავა — ვებსაიტები ქართული ბიზნესებისთვის",
-    description:
-      "პრემიუმ ვებსაიტები სასტუმროების, რესტორნებისა და ბრენდებისთვის — სწრაფი, მობილური, შედეგზე ორიენტირებული.",
+    title: ka.twTitle,
+    description: ka.twDescription,
     images: ["/og.png"],
   },
 };

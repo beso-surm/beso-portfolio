@@ -4,51 +4,36 @@ import { motion } from "motion/react";
 import { staggerContainer, viewportOnce } from "@/lib/motion";
 import SectionHead from "@/components/studio/SectionHead";
 import ProjectCard from "@/components/studio/ProjectCard";
+import { copy, type Lang } from "@/lib/copy";
 
-type Project = {
-  num: string;
-  name: string;
-  kind: string;
-  href: string;
-  monogram: string;
-  gradient: string;
-  image?: string;
-  position?: string;
-  outcome?: string;
-};
-
-const projects: Project[] = [
+// საიტი-ფიქსირებული მონაცემები (href/image/gradient) — ენაზე არ იცვლება.
+const projectMeta = [
   {
-    num: "01",
-    name: "Georgian House",
-    kind: "სასტუმრო · ქუთაისი",
-    href: "https://georgianhousekutaisi.com",
     monogram: "GH",
+    href: "https://georgianhousekutaisi.com",
     gradient: "from-[#7a2a33] via-[#3a1a1f] to-[#0f0c0d]",
     image: "/work/georgian-house.jpg",
-    outcome: "თანამედროვე საიტი ჯავშნებითა და ორი ენით",
   },
   {
-    num: "02",
-    name: "Kvirike Hills",
-    kind: "ბუტიკ-სასტუმრო · კოტეჯები",
-    href: "https://kvirikehills.com",
     monogram: "KH",
+    href: "https://kvirikehills.com",
     gradient: "from-[#1f4d3a] via-[#13261f] to-[#0b0f0d]",
     image: "/work/kvirike-hills.jpg",
-    outcome: "სამენოვანი საიტი ცოცხალი ჯავშნებით",
   },
-];
+] as const;
 
-export default function Work() {
+export default function Work({ lang }: { lang: Lang }) {
+  const t = copy[lang].work;
+  const contactHref = lang === "en" ? "/en#contact" : "#contact";
+
   return (
     <section id="work" className="px-5 py-28 sm:py-36">
       <div className="mx-auto max-w-6xl">
         <SectionHead
-          number="02"
-          eyebrow="ნამუშევრები"
-          title="შერჩეული პროექტები"
-          subtitle="ცოცხალი საიტები, რომლებიც უკვე მუშაობს და კლიენტებს ემსახურება."
+          number={t.number}
+          eyebrow={t.eyebrow}
+          title={t.title}
+          subtitle={t.subtitle}
         />
 
         <motion.div
@@ -58,17 +43,30 @@ export default function Work() {
           viewport={viewportOnce}
           className="mt-16 grid gap-8 md:grid-cols-2"
         >
-          {projects.map((p) => (
-            <ProjectCard key={p.name} {...p} />
+          {t.projects.map((p, i) => (
+            <ProjectCard
+              key={p.name}
+              num={String(i + 1).padStart(2, "0")}
+              name={p.name}
+              kind={p.kind}
+              outcome={p.outcome}
+              href={projectMeta[i].href}
+              monogram={projectMeta[i].monogram}
+              gradient={projectMeta[i].gradient}
+              image={projectMeta[i].image}
+            />
           ))}
         </motion.div>
 
         <p className="mt-12 max-w-md text-sm text-ink-dim">
-          ფარული პროექტი? ვაგებ ვებსაიტებს რესტორნებისთვის, კოტეჯებისთვის და მცირე ბრენდებისთვისაც —{" "}
-          <a href="#contact" className="text-ink underline decoration-accent decoration-2 underline-offset-4 hover:text-accent">
-            მომწერეთ
+          {t.note}
+          <a
+            href={contactHref}
+            className="text-ink underline decoration-accent decoration-2 underline-offset-4 hover:text-accent"
+          >
+            {t.noteLink}
           </a>
-          .
+          {t.noteTail}
         </p>
       </div>
     </section>

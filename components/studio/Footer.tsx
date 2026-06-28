@@ -1,6 +1,8 @@
 import { site } from "@/lib/site";
+import { copy, type Lang } from "@/lib/copy";
 
-export default function Footer() {
+export default function Footer({ lang }: { lang: Lang }) {
+  const t = copy[lang].footer;
   const year = new Date().getFullYear();
   return (
     <footer className="border-t border-line px-5 py-12">
@@ -10,14 +12,14 @@ export default function Footer() {
             ბესო<span className="text-accent">.</span>
           </p>
           <p className="mt-1 text-xs text-ink-dim">
-            ვებ-სტუდია · {site.city}
+            {t.role} · {t.city}
           </p>
         </div>
         <div className="flex flex-col gap-1 text-xs text-ink-dim sm:items-end">
           <p>
-            © {year} {site.name}. ყველა უფლება დაცულია.
+            © {year} {site.name}. {t.rights}
           </p>
-          <p>აშენებულია სიყვარულით ქუთაისში.</p>
+          <p>{t.builtWith}</p>
         </div>
       </div>
     </footer>

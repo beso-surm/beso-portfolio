@@ -8,36 +8,10 @@ import {
   viewportOnce,
 } from "@/lib/motion";
 import SectionHead from "@/components/studio/SectionHead";
+import { copy, type Lang } from "@/lib/copy";
 
-const steps = [
-  {
-    title: "ვეცნობი თქვენს ბიზნესს",
-    description:
-      "მოკლე საუბარი ტელეფონით ან WhatsApp-ით: რა გჭირდებათ, ვინ არიან თქვენი სტუმრები და რა უნდა გააკეთოს საიტმა.",
-  },
-  {
-    title: "გიგზავნით შეთავაზებას",
-    description:
-      "ზუსტი ფასი, ვადა და რას მიიღებთ — ყველაფერი წინასწარ, მოულოდნელობების გარეშე.",
-  },
-  {
-    title: "თქვენ აგზავნით ფოტოებსა და ინფორმაციას",
-    description:
-      "ფოტოები, ფასები, ტექსტები. თუ რამე აკლია, დაგეხმარებით სტრუქტურისა და ტექსტების მომზადებაში.",
-  },
-  {
-    title: "ვაშენებ და გაჩვენებთ",
-    description:
-      "ვაგზავნი სამუშაო ვერსიის ბმულს — ნახულობთ ტელეფონზეც და კომპიუტერზეც, და ერთად ვასწორებთ დეტალებს.",
-  },
-  {
-    title: "საიტი ქვეყნდება",
-    description:
-      "ვაკავშირებ დომენს, ვაქვეყნებ საიტს და გადმოგცემთ ყველაფერს. სურვილისამებრ — შემდგომი მხარდაჭერა.",
-  },
-];
-
-export default function Process() {
+export default function Process({ lang }: { lang: Lang }) {
+  const t = copy[lang].process;
   const ref = useRef<HTMLOListElement>(null);
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({
@@ -50,10 +24,10 @@ export default function Process() {
     <section id="process" className="bg-paper-soft px-5 py-28 sm:py-36">
       <div className="mx-auto max-w-3xl">
         <SectionHead
-          number="03"
-          eyebrow="პროცესი"
-          title="როგორ ვმუშაობ"
-          subtitle="მარტივი, გასაგები ნაბიჯები — თქვენგან მხოლოდ ფოტოები და ინფორმაცია მჭირდება."
+          number={t.number}
+          eyebrow={t.eyebrow}
+          title={t.title}
+          subtitle={t.subtitle}
         />
 
         <motion.ol
@@ -74,7 +48,7 @@ export default function Process() {
             className="absolute bottom-5 left-[19px] top-5 w-px origin-top bg-accent"
           />
 
-          {steps.map((step, i) => (
+          {t.steps.map((step, i) => (
             <motion.li
               key={step.title}
               variants={staggerItem}

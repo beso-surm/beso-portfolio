@@ -11,25 +11,14 @@ import {
   useTransform,
   useVelocity,
 } from "motion/react";
+import { copy, type Lang } from "@/lib/copy";
 
-// მუდმივად მცურავი სიტყვების ზოლი — გადახვევის სიჩქარეზე რეაგირებს.
-// ფონი მემკვიდრეობით ცარიელია (paper) — წერია "შავი მელნით" დიდი სერიფით.
-// მთლიანად transform-ზე (x) — გლუვია მობილურზეც.
 const wrap = (min: number, max: number, v: number) => {
   const range = max - min;
   return ((((v - min) % range) + range) % range) + min;
 };
 
-const words = [
-  "სასტუმროები",
-  "რესტორნები",
-  "კოტეჯები",
-  "ბრენდინგი",
-  "ვებსაიტები",
-  "ქუთაისი",
-];
-
-function Row() {
+function Row({ words }: { words: readonly string[] }) {
   return (
     <span className="flex shrink-0 items-center">
       {words.map((w, i) => (
@@ -45,10 +34,13 @@ function Row() {
 }
 
 export default function VelocityMarquee({
+  lang,
   baseVelocity = 3,
 }: {
+  lang: Lang;
   baseVelocity?: number;
 }) {
+  const words = copy[lang].marquee;
   const reduce = useReducedMotion();
   const baseX = useMotionValue(0);
   const { scrollY } = useScroll();
@@ -79,10 +71,10 @@ export default function VelocityMarquee({
         className="flex flex-nowrap whitespace-nowrap"
         style={reduce ? undefined : { x }}
       >
-        <Row />
-        <Row />
-        <Row />
-        <Row />
+        <Row words={words} />
+        <Row words={words} />
+        <Row words={words} />
+        <Row words={words} />
       </motion.div>
     </div>
   );

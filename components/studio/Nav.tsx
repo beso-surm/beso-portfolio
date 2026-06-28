@@ -3,24 +3,25 @@
 import { useEffect, useState } from "react";
 import { motion, useMotionValueEvent, useScroll } from "motion/react";
 import Pressable from "@/components/motion/Pressable";
+import LangToggle from "@/components/studio/LangToggle";
 import { whatsappLink } from "@/lib/site";
+import { copy, type Lang } from "@/lib/copy";
 
-const navSections = [
-  { id: "work", label: "ნამუშევრები" },
-  { id: "pricing", label: "ფასები" },
-];
+const sectionIds = ["work", "pricing"] as const;
 
-// მინიმალისტური ზედა ბარი — გადახვევისას ცოცხლდება შუშისებრი ფონი.
-// აქტიური სექცია მინიშვნებულია სრიალი ხაზგასმით (layoutId magic).
-export default function Nav() {
+export default function Nav({ lang }: { lang: Lang }) {
+  const t = copy[lang].nav;
+  const navSections = sectionIds.map((id) => ({ id, label: t[id] }));
+  const homeHref = lang === "en" ? "/en#top" : "/#top";
+
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState<string | null>(null);
   const { scrollY } = useScroll();
   useMotionValueEvent(scrollY, "change", (y) => setScrolled(y > 24));
 
   useEffect(() => {
-    const targets = navSections
-      .map((s) => document.getElementById(s.id))
+    const targets = sectionIds
+      .map((id) => document.getElementById(id))
       .filter((el): el is HTMLElement => el !== null);
     if (targets.length === 0) return;
 
@@ -47,7 +48,7 @@ export default function Nav() {
     >
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3.5">
         <a
-          href="#top"
+          href={homeHref}
           className="rounded-md text-base font-semibold tracking-tight text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-paper"
         >
           ბესო<span className="text-accent">.</span>
@@ -71,12 +72,13 @@ export default function Nav() {
               )}
             </a>
           ))}
+          <LangToggle />
           <Pressable
             href={whatsappLink}
             external
             className="inline-flex min-h-[42px] items-center rounded-full bg-ink px-4 text-sm font-semibold text-paper transition-colors hover:bg-night-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
           >
-            დაკავშირება
+            {t.contact}
           </Pressable>
         </div>
       </nav>

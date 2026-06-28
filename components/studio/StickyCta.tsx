@@ -10,9 +10,10 @@ import {
 import Pressable from "@/components/motion/Pressable";
 import { site, whatsappLink } from "@/lib/site";
 import { spring } from "@/lib/motion";
+import { copy, type Lang } from "@/lib/copy";
 
-// მობილური სტიკი-ბარი — გადახვევის შემდეგ ჩნდება, შუშისებრი ფონით.
-export default function StickyCta() {
+export default function StickyCta({ lang }: { lang: Lang }) {
+  const t = copy[lang].sticky;
   const [show, setShow] = useState(false);
   const { scrollY } = useScroll();
   useMotionValueEvent(scrollY, "change", (y) => setShow(y > 640));
@@ -32,14 +33,14 @@ export default function StickyCta() {
             external
             className="inline-flex min-h-[48px] flex-1 items-center justify-center rounded-full bg-accent text-base font-semibold text-white shadow-lg shadow-accent/25"
           >
-            WhatsApp
+            {t.whatsapp}
           </Pressable>
           <Pressable
             href={site.phoneHref}
-            aria-label="დარეკვა"
+            aria-label={t.callAria}
             className="inline-flex min-h-[48px] flex-1 items-center justify-center rounded-full border border-ink/15 text-base font-medium text-ink"
           >
-            დარეკვა
+            {t.call}
           </Pressable>
         </motion.div>
       )}

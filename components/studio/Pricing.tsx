@@ -10,52 +10,7 @@ import {
 import SectionHead from "@/components/studio/SectionHead";
 import Pressable from "@/components/motion/Pressable";
 import CountUp from "@/components/motion/CountUp";
-
-const packages = [
-  {
-    name: "სავიზიტო გვერდი",
-    priceFrom: 600,
-    description:
-      "ერთგვერდიანი თანამედროვე საიტი მცირე ბიზნესისთვის, რომელსაც სწრაფად სჭირდება ონლაინ წარმომადგენლობა.",
-    features: [
-      "ერთგვერდიანი დიზაინი",
-      "მობილურზე სრულად მორგებული",
-      "გალერეა და ბიზნესის აღწერა",
-      "კონტაქტი: ზარი, WhatsApp, რუკა",
-      "მზადაა დაახლოებით 1 კვირაში",
-    ],
-    featured: false,
-  },
-  {
-    name: "სტანდარტული საიტი",
-    priceFrom: 1000,
-    description:
-      "სრულფასოვანი ვებსაიტი სასტუმროსთვის, კოტეჯისთვის ან რესტორნისთვის — ყველაზე ხშირად ამას ირჩევენ.",
-    features: [
-      "4–6 გვერდი (ოთახები/მენიუ, გალერეა…)",
-      "ფასები და დეტალური ინფორმაცია",
-      "ჯავშნის / კონტაქტის ფორმა",
-      "ორი ენა (ქართული + ინგლისური)",
-      "საბაზისო SEO ოპტიმიზაცია",
-      "მზადაა დაახლოებით 2 კვირაში",
-    ],
-    featured: true,
-  },
-  {
-    name: "პრემიუმ საიტი",
-    priceFrom: 1500,
-    description:
-      "ყველაფერი სტანდარტული პაკეტიდან და დამატებით — ადმინ პანელი: ფასებსა და ფოტოებს თავად განაახლებთ, როცა გინდათ.",
-    features: [
-      "ყველაფერი სტანდარტული პაკეტიდან",
-      "ადმინ პანელი მართვისთვის",
-      "ჯავშნის შეტყობინებები ელფოსტაზე",
-      "მეტი გვერდი და ფუნქცია საჭიროებისას",
-      "გაშვების შემდეგ მხარდაჭერა",
-    ],
-    featured: false,
-  },
-];
+import { copy, type Lang } from "@/lib/copy";
 
 const Check = () => (
   <svg
@@ -72,15 +27,26 @@ const Check = () => (
   </svg>
 );
 
-export default function Pricing() {
+export default function Pricing({ lang }: { lang: Lang }) {
+  const t = copy[lang].pricing;
+  const contactHref = lang === "en" ? "/en#contact" : "#contact";
+
+  // ფასი — KA: "600₾-დან" (suffix); EN: "from ₾600" (prefix)
+  const renderPrice = (price: number) =>
+    lang === "en" ? (
+      <CountUp value={price} prefix="₾" />
+    ) : (
+      <CountUp value={price} suffix="₾" />
+    );
+
   return (
     <section id="pricing" className="px-5 py-28 sm:py-36">
       <div className="mx-auto max-w-6xl">
         <SectionHead
-          number="04"
-          eyebrow="ფასები"
-          title="გამჭვირვალე პაკეტები"
-          subtitle="საბოლოო ფასი დამოკიდებულია პროექტის მოცულობაზე — მომწერეთ და ერთ დღეში მიიღებთ ზუსტ შეთავაზებას."
+          number={t.number}
+          eyebrow={t.eyebrow}
+          title={t.title}
+          subtitle={t.subtitle}
         />
 
         <motion.div
@@ -90,7 +56,7 @@ export default function Pricing() {
           viewport={viewportOnce}
           className="mt-16 grid items-start gap-6 lg:grid-cols-3"
         >
-          {packages.map((pkg) => (
+          {t.packages.map((pkg) => (
             <div
               key={pkg.name}
               className={pkg.featured ? "lg:-translate-y-4" : ""}
@@ -106,7 +72,7 @@ export default function Pricing() {
               >
                 {pkg.featured && (
                   <span className="absolute -top-3 left-8 rounded-full bg-accent px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-white">
-                    პოპულარული
+                    {t.popular}
                   </span>
                 )}
                 <h3
@@ -121,14 +87,14 @@ export default function Pricing() {
                     pkg.featured ? "text-mist" : "text-ink"
                   }`}
                 >
-                  <CountUp value={pkg.priceFrom} suffix="₾" />
+                  {renderPrice(pkg.priceFrom)}
                 </p>
                 <p
                   className={`mt-2 text-xs uppercase tracking-[0.14em] ${
                     pkg.featured ? "text-mist-dim" : "text-ink-dim"
                   }`}
                 >
-                  დან
+                  {t.from}
                 </p>
                 <p
                   className={`mt-5 text-sm leading-6 ${
@@ -151,7 +117,7 @@ export default function Pricing() {
                   ))}
                 </ul>
                 <Pressable
-                  href="#contact"
+                  href={contactHref}
                   magnetic
                   className={`mt-8 inline-flex min-h-[48px] items-center justify-center rounded-full px-6 text-sm font-semibold ${
                     pkg.featured
@@ -159,17 +125,14 @@ export default function Pricing() {
                       : "border border-ink/15 text-ink hover:bg-ink hover:text-paper transition-colors"
                   }`}
                 >
-                  შეთავაზების მიღება
+                  {t.cta}
                 </Pressable>
               </motion.div>
             </div>
           ))}
         </motion.div>
 
-        <p className="mt-10 text-center text-sm text-ink-dim">
-          დომენი და ჰოსტინგი ცალკე ღირს (წელიწადში დაახლოებით 40–100₾) —
-          ყველაფერს მე მოგიგვარებთ.
-        </p>
+        <p className="mt-10 text-center text-sm text-ink-dim">{t.note}</p>
       </div>
     </section>
   );

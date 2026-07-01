@@ -3,84 +3,83 @@
 @theme inline {
   --font-sans: var(--font-noto-georgian), system-ui, sans-serif;
   --font-serif: var(--font-noto-serif-georgian), Georgia, serif;
+  --font-mono: var(--font-space-mono), ui-monospace, monospace;
 
-  /* ქაღალდისებრი (Cream Editorial) ფენა — ძირითადი */
-  --color-paper: #F4EFE6;
-  --color-paper-soft: #ECE5D5;
-  --color-card: #FFFFFF;
+  /* ესპრესო ფენა (Espresso) — ბნელი, პრემიუმ ბაზისი */
+  --color-base: #16110d;        /* ფონი — ძირითადი */
+  --color-raised: #1b1510;      /* ფონი — ალტ. სექცია (Process, FAQ) */
+  --color-card: #1d1610;        /* ბარათის ფონი */
+  --color-card-hover: #231a12;  /* ბარათის ფონი hover */
 
-  /* ტექსტი — ღრმა მელანი */
-  --color-ink: #0F0F10;
-  --color-ink-soft: #4A4A4F;
-  --color-ink-dim: #6E6E76;
+  /* ტექსტი — კრემისფერი */
+  --color-cream: #f3ebdd;
 
-  /* ხაზები / დელიკატური საზღვრები */
-  --color-line: #D9D0BE;
-  --color-line-strong: #B8AC92;
+  /* აქცენტი — თაფლისფერ-ქარვისფერი (honey-amber) */
+  --color-accent: #e3a23c;
+}
 
-  /* აქცენტი — დაწვისფერი (burnt sienna), წინდახედულად გამოყენებული */
-  --color-accent: #C2410C;
-  --color-accent-2: #E96B2B;
-  --color-accent-soft: #F5E6D8;
-
-  /* ბნელი მოდულები (Contact CTA, Footer) — კონტრასტი */
-  --color-night: #0F0F10;
-  --color-night-soft: #1B1B1F;
-  --color-mist: #F5EFE3;
-  --color-mist-dim: #A29F95;
+:root {
+  /* themeable accent — README-ის მიხედვით --ac custom property-ით */
+  --ac: var(--color-accent);
 }
 
 html {
-  color-scheme: light;
+  color-scheme: dark;
+  scroll-behavior: smooth;
 }
 
 body {
-  background-color: var(--color-paper);
-  color: var(--color-ink);
-  /* წვრილი ფაქტურა — სითბო ცარიელი ფერის ნაცვლად, GPU-ფრიენდლი */
-  background-image:
-    radial-gradient(circle at 1px 1px, rgba(15, 15, 16, 0.025) 1px, transparent 0);
-  background-size: 22px 22px;
-  background-attachment: fixed;
+  background-color: var(--color-base);
+  color: var(--color-cream);
+  -webkit-font-smoothing: antialiased;
+  /* clip (არა hidden) — ჰორიზონტალურ overflow-ს ჭრის, მაგრამ არ ქმნის scroll
+     კონტეინერს, ამიტომ sticky nav ვიუპორტზე რჩება მიმაგრებული. */
+  overflow-x: clip;
 }
 
 ::selection {
-  background: var(--color-accent);
-  color: #fff;
+  background: var(--ac);
+  color: var(--color-base);
 }
 
-/* შუშისებრი ფენა — გამიზნულად მხოლოდ რამდენიმე ზედაპირზე (perf budget) */
-.glass {
-  background-color: rgba(255, 255, 255, 0.62);
-  -webkit-backdrop-filter: saturate(180%) blur(14px);
-  backdrop-filter: saturate(180%) blur(14px);
-  border: 1px solid rgba(217, 208, 190, 0.55);
-}
-.glass-dark {
-  background-color: rgba(15, 15, 16, 0.55);
-  -webkit-backdrop-filter: saturate(160%) blur(14px);
-  backdrop-filter: saturate(160%) blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+/* ===== ხელნაწერი მელნის ანიმაციები (signature ink-motion) ===== */
+
+/* მელნის ტალღა — ქარვისფერი ლაქა "სუნთქავს" */
+@keyframes wash {
+  0%, 100% { opacity: 0.14; transform: scale(0.86); }
+  50%      { opacity: 0.34; transform: scale(1.12); }
 }
 
-/* რედაქციული Drop cap — პირველი ასო დიდ სერიფ-ბლოკად, აქცენტური ფერით */
-.drop-cap::first-letter {
-  float: left;
-  font-family: var(--font-serif);
-  font-size: 4.5rem;
-  line-height: 0.85;
-  font-weight: 700;
-  color: var(--color-accent);
-  margin: 0.25rem 0.6rem 0 0;
+/* ბ-ს ნაზი ცურვა — translateY + მცირე rotation wobble */
+@keyframes floaty {
+  0%, 100% { transform: translateY(0) rotate(-1.5deg); }
+  50%      { transform: translateY(-14px) rotate(1.5deg); }
 }
 
-/* "ცოცხალი" ნათების ანიმაცია — მხოლოდ opacity (იაფი) */
-@keyframes pulseDot {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.35; }
+/* მელნის ხაზი თავს იწერს და შემდეგ იშლება (draw → erase) */
+@keyframes inkdraw {
+  0%   { stroke-dashoffset: 100; }
+  48%  { stroke-dashoffset: 0; }
+  52%  { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -100; }
 }
-.live-dot {
-  animation: pulseDot 2.4s ease-in-out infinite;
+
+/* მელნის წვეთები ცურავს ზემოთ და ქრება */
+@keyframes speck {
+  0%   { transform: translate(0, 0); opacity: 0; }
+  12%  { opacity: 0.85; }
+  100% { transform: translate(var(--sx, 0), -110px); opacity: 0; }
+}
+
+/* eyebrow pill-ის მოციმციმე წერტილი */
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; transform: scale(0.85); }
+  50%      { opacity: 1; transform: scale(1.1); }
+}
+
+/* უსასრულო ჰორიზონტალური marquee */
+@keyframes marq {
+  to { transform: translateX(-50%); }
 }
 
 /* Lenis ნაკადური გადახვევა */
@@ -99,4 +98,16 @@ html.lenis body {
 }
 .lenis.lenis-smooth iframe {
   pointer-events: none;
+}
+
+/* ===== ხელმისაწვდომობა — მოძრაობის შემცირება ===== */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }

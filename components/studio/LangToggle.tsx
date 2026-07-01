@@ -3,23 +3,26 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-// ენის გადამრთველი — გადარბენს მიმდინარე გვერდის ბმულზე მეორე ენაზე.
-// /  ↔ /en  (მთავარი გვერდი ორი ვერსიით; სხვა ბილიკები — ფესვური / -ით).
+// ენის გადამრთველი — მინიმალური "KA / EN" ტექსტ-ტოგლი (handoff-ის ზუსტი სტილი).
+// აქტიური ენა — აქცენტისფერი, არააქტიური — მიბინდული. მარშრუტზე დაფუძნებული (/ ↔ /en) — SEO-სთვის.
 export default function LangToggle() {
   const path = usePathname() ?? "/";
   const isEn = path.startsWith("/en");
   const otherHref = isEn ? "/" : "/en";
-  const otherLabel = isEn ? "KA" : "EN";
+
+  const base = "text-[13.5px] font-bold tracking-[0.07em] transition-colors duration-200";
+  const active = "text-[var(--ac)]";
+  const idle = "text-[rgba(243,235,221,0.4)]";
 
   return (
     <Link
       href={otherHref}
-      className="inline-flex h-9 items-center rounded-full border border-line bg-card/60 px-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-soft transition-colors hover:border-ink/30 hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
       aria-label={isEn ? "Switch to Georgian" : "ენის შეცვლა ინგლისურზე"}
+      className="flex items-center gap-[7px] no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ac)] focus-visible:ring-offset-4 focus-visible:ring-offset-base"
     >
-      <span className={isEn ? "text-ink" : "opacity-50"}>EN</span>
-      <span className="mx-1.5 text-ink-dim/60">/</span>
-      <span className={isEn ? "opacity-50" : "text-ink"}>KA</span>
+      <span className={`${base} ${isEn ? idle : active}`}>KA</span>
+      <span className="text-[12px] text-[rgba(243,235,221,0.25)]">/</span>
+      <span className={`${base} ${isEn ? active : idle}`}>EN</span>
     </Link>
   );
 }

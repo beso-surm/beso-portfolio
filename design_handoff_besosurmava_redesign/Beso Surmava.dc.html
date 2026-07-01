@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@400;500;600;700;800;900&family=Noto+Serif+Georgian:wght@500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:#16110d}
+  ::selection{background:#e3a23c;color:#16110d}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes marq{to{transform:translateX(-50%)}}
+  @keyframes pulse{0%,100%{opacity:.5;transform:scale(.85)}50%{opacity:1;transform:scale(1.1)}}
+  @keyframes inkdraw{0%{stroke-dashoffset:100}48%{stroke-dashoffset:0}52%{stroke-dashoffset:0}100%{stroke-dashoffset:-100}}
+  @keyframes drawonce{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
+  @keyframes inkdot{from{opacity:0;transform:scale(0)}to{opacity:1;transform:scale(1)}}
+  @keyframes floaty{0%,100%{transform:translateY(0) rotate(-1.5deg)}50%{transform:translateY(-14px) rotate(1.5deg)}}
+  @keyframes wash{0%,100%{opacity:.14;transform:scale(.86)}50%{opacity:.34;transform:scale(1.12)}}
+  @keyframes speck{0%{transform:translate(0,0);opacity:0}12%{opacity:.85}100%{transform:translate(var(--sx,0),-110px);opacity:0}}
+</style>
+</helmet>
+<div style="--ac:{{ accent }};background:#16110d;color:#f3ebdd;font-family:'Noto Sans Georgian',system-ui,sans-serif;min-height:100vh;overflow-x:hidden;position:relative;-webkit-font-smoothing:antialiased">
+
+  <nav style="position:sticky;top:0;z-index:60;backdrop-filter:blur(14px);background:rgba(22,17,13,0.78);border-bottom:1px solid rgba(243,235,221,0.09)">
+    <div style="max-width:1280px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;justify-content:space-between;gap:32px">
+      <a href="#top" style="display:flex;align-items:center;gap:13px;text-decoration:none;color:#f3ebdd">
+        <span style="display:inline-flex;transition:transform .35s ease" style-hover="display:inline-flex;transform:translateY(-2px)">
+          <svg width="48" height="48" viewBox="0 0 64 66" fill="none" aria-label="ბესო" style="overflow:visible">
+            <ellipse cx="32" cy="38" rx="27" ry="24" fill="var(--ac,#e3a23c)" style="transform-origin:32px 38px;animation:wash 6s ease-in-out infinite"></ellipse>
+            <text x="32" y="35" text-anchor="middle" dominant-baseline="central" font-family="'Noto Serif Georgian',serif" font-weight="700" font-size="52" fill="#f3ebdd">ბ</text>
+          </svg>
+        </span>
+        <span style="display:flex;flex-direction:column;line-height:1">
+          <span style="font-family:'Noto Serif Georgian',serif;font-weight:700;font-size:22px;letter-spacing:-0.01em">ბესო</span>
+          <span style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.24em;color:rgba(243,235,221,0.42);text-transform:uppercase;margin-top:4px;white-space:nowrap">Web Studio · Kutaisi</span>
+        </span>
+      </a>
+      <div style="display:flex;align-items:center;gap:30px">
+        <div style="display:flex;align-items:center;gap:30px" data-nav>
+          <sc-for list="{{ nav }}" as="n" hint-placeholder-count="5">
+            <a href="{{ n.href }}" style="text-decoration:none;color:rgba(243,235,221,0.58);font-size:14.5px;font-weight:500;padding-bottom:4px;border-bottom:1.5px solid transparent;transition:color .2s,border-color .2s" style-hover="text-decoration:none;color:#f3ebdd;font-size:14.5px;font-weight:500;padding-bottom:4px;border-bottom:1.5px solid var(--ac,#e3a23c)">{{ n.label }}</a>
+          </sc-for>
+        </div>
+        <span style="width:1px;height:22px;background:rgba(243,235,221,0.13)"></span>
+        <button onClick="{{ toggleLang }}" style="background:none;border:none;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:7px;padding:0">
+          <span style="{{ kaPill }}">KA</span>
+          <span style="color:rgba(243,235,221,0.25);font-size:12px">/</span>
+          <span style="{{ enPill }}">EN</span>
+        </button>
+        <a href="{{ wa }}" target="_blank" style="text-decoration:none;display:inline-flex;align-items:center;gap:9px;background:#f3ebdd;color:#16110d;font-weight:700;font-size:14px;padding:11px 21px;border-radius:999px;transition:transform .2s,background .2s;white-space:nowrap" style-hover="text-decoration:none;display:inline-flex;align-items:center;gap:9px;background:var(--ac,#e3a23c);color:#16110d;font-weight:700;font-size:14px;padding:11px 21px;border-radius:999px;transform:translateY(-1px)"><span style="width:7px;height:7px;border-radius:50%;background:#16110d"></span>{{ t.navCta }}</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="top">
+
+    <!-- HERO -->
+    <section data-screen-label="Hero" style="position:relative;max-width:1280px;margin:0 auto;padding:80px 32px 64px">
+      <div style="display:grid;grid-template-columns:1.15fr 0.85fr;gap:48px;align-items:center;min-height:560px">
+        <div>
+          <div style="display:inline-flex;align-items:center;gap:10px;border:1px solid rgba(243,235,221,0.14);border-radius:999px;padding:8px 16px;font-size:13px;color:rgba(243,235,221,0.65);margin-bottom:36px">
+            <span style="width:7px;height:7px;border-radius:50%;background:var(--ac,#e3a23c);animation:pulse 2.4s ease-in-out infinite"></span>
+            {{ t.heroEyebrow }}
+          </div>
+          <h1 style="font-size:clamp(44px,5.6vw,84px);line-height:0.98;font-weight:900;letter-spacing:-0.025em;margin-bottom:28px;text-wrap:balance">{{ t.heroPre }} <em style="font-style:italic;color:var(--ac,#e3a23c);font-weight:800">{{ t.heroEm }}</em> {{ t.heroPost }}</h1>
+          <p style="font-size:clamp(17px,1.5vw,20px);line-height:1.55;color:rgba(243,235,221,0.62);max-width:520px;margin-bottom:40px">{{ t.heroSub }}</p>
+          <div style="display:flex;flex-wrap:wrap;gap:14px;margin-bottom:56px">
+            <a href="{{ wa }}" target="_blank" style="text-decoration:none;display:inline-flex;align-items:center;gap:10px;background:#f3ebdd;color:#16110d;font-weight:700;font-size:16px;padding:16px 28px;border-radius:999px;transition:transform .2s,background .2s" style-hover="text-decoration:none;display:inline-flex;align-items:center;gap:10px;background:var(--ac,#e3a23c);color:#16110d;font-weight:700;font-size:16px;padding:16px 28px;border-radius:999px;transform:translateY(-2px)">{{ t.heroCta1 }} <span style="font-size:18px">→</span></a>
+            <a href="#work" style="text-decoration:none;display:inline-flex;align-items:center;gap:10px;background:transparent;color:#f3ebdd;font-weight:600;font-size:16px;padding:16px 28px;border-radius:999px;border:1px solid rgba(243,235,221,0.2);transition:background .2s" style-hover="text-decoration:none;display:inline-flex;align-items:center;gap:10px;background:rgba(243,235,221,0.06);color:#f3ebdd;font-weight:600;font-size:16px;padding:16px 28px;border-radius:999px;border:1px solid rgba(243,235,221,0.3)">{{ t.heroCta2 }}</a>
+          </div>
+          <div style="display:flex;gap:48px;flex-wrap:wrap">
+            <sc-for list="{{ stats }}" as="s" hint-placeholder-count="3">
+              <div>
+                <div style="font-size:34px;font-weight:800;letter-spacing:-0.02em;line-height:1">{{ s.num }}</div>
+                <div style="font-size:13px;color:rgba(243,235,221,0.5);margin-top:6px;text-transform:uppercase;letter-spacing:0.08em">{{ s.label }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:center;position:relative">
+          <sc-if value="{{ showGraphic }}" hint-placeholder-val="{{ true }}">
+          <svg viewBox="0 0 400 420" width="100%" style="max-width:470px;height:auto;overflow:visible">
+            <circle cx="200" cy="210" r="128" fill="var(--ac,#e3a23c)" opacity="0.16" style="transform-origin:200px 210px;animation:wash 7.5s ease-in-out infinite"></circle>
+            <path d="M298 104 C 372 158, 374 262, 302 318 C 230 374, 128 372, 76 300 C 26 230, 46 122, 140 90 C 206 68, 262 78, 300 116" pathLength="100" fill="none" stroke="var(--ac,#e3a23c)" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="100" style="animation:inkdraw 8s ease-in-out infinite"></path>
+            <path d="M108 318 C 56 262, 64 156, 156 122 C 224 96, 286 138, 296 206" pathLength="100" fill="none" stroke="rgba(243,235,221,0.5)" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="100" style="animation:inkdraw 6.6s ease-in-out infinite;animation-delay:-2.4s"></path>
+            <path d="M132 332 C 188 352, 244 348, 286 320" pathLength="100" fill="none" stroke="var(--ac,#e3a23c)" stroke-width="3" stroke-linecap="round" stroke-dasharray="100" style="animation:inkdraw 5.4s ease-in-out infinite;animation-delay:-1.2s"></path>
+            <g style="transform-origin:200px 212px;animation:floaty 6.5s ease-in-out infinite">
+              <text x="200" y="222" text-anchor="middle" dominant-baseline="central" font-family="'Noto Serif Georgian',serif" font-weight="700" font-size="232" fill="#f3ebdd">ბ</text>
+            </g>
+            <circle cx="150" cy="300" r="3.2" fill="var(--ac,#e3a23c)" style="--sx:-26px;animation:speck 4.8s ease-in infinite"></circle>
+            <circle cx="262" cy="312" r="2.4" fill="var(--ac,#e3a23c)" style="--sx:20px;animation:speck 5.6s ease-in infinite;animation-delay:-1.8s"></circle>
+            <circle cx="206" cy="332" r="2" fill="rgba(243,235,221,0.7)" style="--sx:8px;animation:speck 6.2s ease-in infinite;animation-delay:-3.2s"></circle>
+            <circle cx="312" cy="232" r="2.6" fill="var(--ac,#e3a23c)" style="--sx:14px;animation:speck 5.2s ease-in infinite;animation-delay:-0.8s"></circle>
+          </svg>
+          </sc-if>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;color:rgba(243,235,221,0.4);font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;margin-top:24px">
+        <span style="width:1px;height:36px;background:linear-gradient(rgba(243,235,221,0.4),transparent)"></span>
+        {{ t.scroll }}
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" data-screen-label="Services" style="max-width:1280px;margin:0 auto;padding:88px 32px;border-top:1px solid rgba(243,235,221,0.07)">
+      <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:18px">
+        <span style="font-family:'Space Mono',monospace;color:var(--ac,#e3a23c);font-size:14px">01</span>
+        <span style="font-size:14px;text-transform:uppercase;letter-spacing:0.16em;color:rgba(243,235,221,0.55)">{{ t.s1kicker }}</span>
+      </div>
+      <h2 style="font-size:clamp(30px,3.6vw,52px);font-weight:800;letter-spacing:-0.02em;line-height:1.05;max-width:760px;margin-bottom:14px">{{ t.s1title }}</h2>
+      <p style="font-size:18px;color:rgba(243,235,221,0.55);max-width:560px;margin-bottom:48px">{{ t.s1intro }}</p>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px">
+        <sc-for list="{{ services }}" as="sv" hint-placeholder-count="4">
+          <div style="background:#1d1610;border:1px solid rgba(243,235,221,0.08);border-radius:20px;padding:32px;transition:border-color .25s,background .25s" style-hover="background:#231a12;border:1px solid rgba(227,162,60,0.4);border-radius:20px;padding:32px">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:22px">
+              <span style="font-family:'Space Mono',monospace;font-size:13px;color:var(--ac,#e3a23c)">{{ sv.num }}</span>
+              <span style="width:40px;height:40px;border-radius:50%;border:1px solid rgba(243,235,221,0.16);display:flex;align-items:center;justify-content:center;font-size:18px;color:rgba(243,235,221,0.7)">{{ sv.icon }}</span>
+            </div>
+            <h3 style="font-size:23px;font-weight:700;margin-bottom:12px;letter-spacing:-0.01em">{{ sv.title }}</h3>
+            <p style="font-size:15.5px;line-height:1.6;color:rgba(243,235,221,0.58);margin-bottom:20px">{{ sv.body }}</p>
+            <span style="font-family:'Space Mono',monospace;font-size:11.5px;color:rgba(243,235,221,0.4);letter-spacing:0.04em">{{ sv.tag }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div style="border-top:1px solid rgba(243,235,221,0.07);border-bottom:1px solid rgba(243,235,221,0.07);padding:26px 0;overflow:hidden;white-space:nowrap">
+      <div style="display:inline-flex;animation:marq 32s linear infinite;will-change:transform">
+        <span style="display:inline-flex;align-items:center">
+          <sc-for list="{{ marquee }}" as="m" hint-placeholder-count="6">
+            <span style="display:inline-flex;align-items:center"><span style="font-size:26px;font-weight:700;padding:0 28px;color:rgba(243,235,221,0.85);letter-spacing:-0.01em">{{ m }}</span><span style="color:var(--ac,#e3a23c);font-size:18px">✦</span></span>
+          </sc-for>
+        </span>
+        <span style="display:inline-flex;align-items:center" aria-hidden="true">
+          <sc-for list="{{ marquee }}" as="m" hint-placeholder-count="6">
+            <span style="display:inline-flex;align-items:center"><span style="font-size:26px;font-weight:700;padding:0 28px;color:rgba(243,235,221,0.85);letter-spacing:-0.01em">{{ m }}</span><span style="color:var(--ac,#e3a23c);font-size:18px">✦</span></span>
+          </sc-for>
+        </span>
+      </div>
+    </div>
+
+    <!-- WORK -->
+    <section id="work" data-screen-label="Work" style="max-width:1280px;margin:0 auto;padding:88px 32px">
+      <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:18px">
+        <span style="font-family:'Space Mono',monospace;color:var(--ac,#e3a23c);font-size:14px">02</span>
+        <span style="font-size:14px;text-transform:uppercase;letter-spacing:0.16em;color:rgba(243,235,221,0.55)">{{ t.s2kicker }}</span>
+      </div>
+      <h2 style="font-size:clamp(30px,3.6vw,52px);font-weight:800;letter-spacing:-0.02em;line-height:1.05;max-width:760px;margin-bottom:14px">{{ t.s2title }}</h2>
+      <p style="font-size:18px;color:rgba(243,235,221,0.55);max-width:560px;margin-bottom:48px">{{ t.s2intro }}</p>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px">
+        <sc-for list="{{ work }}" as="w" hint-placeholder-count="2">
+          <a href="{{ w.url }}" target="_blank" style="text-decoration:none;color:#f3ebdd;display:block;background:#1d1610;border:1px solid rgba(243,235,221,0.08);border-radius:24px;overflow:hidden;transition:border-color .25s,transform .25s" style-hover="text-decoration:none;color:#f3ebdd;display:block;background:#1d1610;border:1px solid rgba(227,162,60,0.45);border-radius:24px;overflow:hidden;transform:translateY(-4px)">
+            <div style="height:280px;background-image:repeating-linear-gradient(135deg,rgba(243,235,221,0.05) 0 14px,rgba(243,235,221,0.02) 14px 28px);display:flex;align-items:center;justify-content:center;position:relative;border-bottom:1px solid rgba(243,235,221,0.08)">
+              <span style="font-family:'Space Mono',monospace;font-size:12px;color:rgba(243,235,221,0.35);letter-spacing:0.1em;text-transform:uppercase">{{ w.shot }}</span>
+              <span style="position:absolute;top:18px;right:18px;width:40px;height:40px;border-radius:50%;background:rgba(22,17,13,0.7);border:1px solid rgba(243,235,221,0.2);display:flex;align-items:center;justify-content:center;font-size:16px">↗</span>
+            </div>
+            <div style="padding:28px 30px 32px">
+              <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px">
+                <span style="font-family:'Space Mono',monospace;font-size:12px;color:var(--ac,#e3a23c)">{{ w.num }}</span>
+                <span style="font-size:13px;color:rgba(243,235,221,0.5)">{{ w.type }}</span>
+              </div>
+              <h3 style="font-size:26px;font-weight:700;letter-spacing:-0.01em;margin-bottom:8px">{{ w.name }}</h3>
+              <p style="font-size:15px;color:rgba(243,235,221,0.55);line-height:1.5">{{ w.desc }}</p>
+            </div>
+          </a>
+        </sc-for>
+      </div>
+      <p style="margin-top:32px;font-size:15.5px;color:rgba(243,235,221,0.5)">{{ t.workNote }} <a href="#contact" style="color:var(--ac,#e3a23c);text-decoration:none;border-bottom:1px solid rgba(227,162,60,0.4)">{{ t.workNoteLink }}</a>.</p>
+    </section>
+
+    <!-- PROCESS -->
+    <section id="process" data-screen-label="Process" style="background:#1b1510;border-top:1px solid rgba(243,235,221,0.07);border-bottom:1px solid rgba(243,235,221,0.07)">
+      <div style="max-width:1280px;margin:0 auto;padding:88px 32px">
+        <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:18px">
+          <span style="font-family:'Space Mono',monospace;color:var(--ac,#e3a23c);font-size:14px">03</span>
+          <span style="font-size:14px;text-transform:uppercase;letter-spacing:0.16em;color:rgba(243,235,221,0.55)">{{ t.s3kicker }}</span>
+        </div>
+        <h2 style="font-size:clamp(30px,3.6vw,52px);font-weight:800;letter-spacing:-0.02em;line-height:1.05;max-width:760px;margin-bottom:14px">{{ t.s3title }}</h2>
+        <p style="font-size:18px;color:rgba(243,235,221,0.55);max-width:560px;margin-bottom:52px">{{ t.s3intro }}</p>
+        <div style="display:flex;flex-direction:column">
+          <sc-for list="{{ process }}" as="p" hint-placeholder-count="5">
+            <div style="display:grid;grid-template-columns:80px 1fr;gap:28px;padding:28px 0;border-top:1px solid rgba(243,235,221,0.1)">
+              <span style="font-size:40px;font-weight:800;color:var(--ac,#e3a23c);letter-spacing:-0.02em;line-height:1">{{ p.num }}</span>
+              <div style="max-width:640px">
+                <h3 style="font-size:22px;font-weight:700;margin-bottom:8px">{{ p.title }}</h3>
+                <p style="font-size:16px;line-height:1.6;color:rgba(243,235,221,0.58)">{{ p.body }}</p>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section id="pricing" data-screen-label="Pricing" style="max-width:1280px;margin:0 auto;padding:88px 32px">
+      <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:18px">
+        <span style="font-family:'Space Mono',monospace;color:var(--ac,#e3a23c);font-size:14px">04</span>
+        <span style="font-size:14px;text-transform:uppercase;letter-spacing:0.16em;color:rgba(243,235,221,0.55)">{{ t.s4kicker }}</span>
+      </div>
+      <h2 style="font-size:clamp(30px,3.6vw,52px);font-weight:800;letter-spacing:-0.02em;line-height:1.05;max-width:760px;margin-bottom:14px">{{ t.s4title }}</h2>
+      <p style="font-size:18px;color:rgba(243,235,221,0.55);max-width:560px;margin-bottom:48px">{{ t.s4intro }}</p>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:start">
+        <sc-for list="{{ pricing }}" as="pl" hint-placeholder-count="3">
+          <div style="{{ pl.cardStyle }}">
+            <sc-if value="{{ pl.popular }}" hint-placeholder-val="{{ false }}">
+              <span style="display:inline-block;background:var(--ac,#e3a23c);color:#16110d;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;padding:6px 14px;border-radius:999px;margin-bottom:18px">{{ t.popular }}</span>
+            </sc-if>
+            <h3 style="font-size:21px;font-weight:700;margin-bottom:16px">{{ pl.name }}</h3>
+            <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:18px">
+              <span style="font-size:46px;font-weight:800;letter-spacing:-0.02em">{{ pl.price }}</span>
+              <span style="font-size:14px;color:rgba(243,235,221,0.5)">{{ pl.from }}</span>
+            </div>
+            <p style="font-size:15px;line-height:1.55;color:rgba(243,235,221,0.58);margin-bottom:24px;min-height:66px">{{ pl.desc }}</p>
+            <div style="height:1px;background:rgba(243,235,221,0.1);margin-bottom:22px"></div>
+            <div style="display:flex;flex-direction:column;gap:13px;margin-bottom:30px">
+              <sc-for list="{{ pl.features }}" as="f" hint-placeholder-count="5">
+                <div style="display:flex;gap:11px;align-items:flex-start;font-size:14.5px;color:rgba(243,235,221,0.78);line-height:1.45">
+                  <span style="color:var(--ac,#e3a23c);font-size:14px;margin-top:1px">✓</span>{{ f }}
+                </div>
+              </sc-for>
+            </div>
+            <a href="{{ wa }}" target="_blank" style="{{ pl.btnStyle }}">{{ t.getOffer }}</a>
+          </div>
+        </sc-for>
+      </div>
+      <p style="margin-top:28px;font-size:14.5px;color:rgba(243,235,221,0.45);max-width:640px">{{ t.priceNote }}</p>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" data-screen-label="FAQ" style="background:#1b1510;border-top:1px solid rgba(243,235,221,0.07);border-bottom:1px solid rgba(243,235,221,0.07)">
+      <div style="max-width:920px;margin:0 auto;padding:88px 32px">
+        <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:18px">
+          <span style="font-family:'Space Mono',monospace;color:var(--ac,#e3a23c);font-size:14px">05</span>
+          <span style="font-size:14px;text-transform:uppercase;letter-spacing:0.16em;color:rgba(243,235,221,0.55)">{{ t.s5kicker }}</span>
+        </div>
+        <h2 style="font-size:clamp(30px,3.6vw,52px);font-weight:800;letter-spacing:-0.02em;line-height:1.05;margin-bottom:40px">{{ t.s5title }}</h2>
+        <div style="display:flex;flex-direction:column">
+          <sc-for list="{{ faqItems }}" as="q" hint-placeholder-count="6">
+            <div style="border-top:1px solid rgba(243,235,221,0.1)">
+              <button onClick="{{ toggleFaq }}" data-idx="{{ q.idx }}" style="width:100%;display:flex;align-items:center;justify-content:space-between;gap:20px;background:none;border:none;color:#f3ebdd;font-family:inherit;text-align:left;padding:26px 4px;cursor:pointer">
+                <span style="display:flex;gap:16px;align-items:baseline">
+                  <span style="font-family:'Space Mono',monospace;font-size:13px;color:var(--ac,#e3a23c)">{{ q.num }}</span>
+                  <span style="font-size:18.5px;font-weight:600">{{ q.q }}</span>
+                </span>
+                <span style="{{ q.iconStyle }}">+</span>
+              </button>
+              <div style="{{ q.answerStyle }}">
+                <p style="font-size:16px;line-height:1.65;color:rgba(243,235,221,0.6);padding:0 4px 26px 46px">{{ q.a }}</p>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" data-screen-label="About" style="max-width:1280px;margin:0 auto;padding:88px 32px">
+      <div style="display:grid;grid-template-columns:0.85fr 1.15fr;gap:56px;align-items:center">
+        <div style="aspect-ratio:4/5;border-radius:24px;background-image:repeating-linear-gradient(135deg,rgba(243,235,221,0.05) 0 14px,rgba(243,235,221,0.02) 14px 28px);border:1px solid rgba(243,235,221,0.08);display:flex;align-items:center;justify-content:center">
+          <span style="font-family:'Space Mono',monospace;font-size:12px;color:rgba(243,235,221,0.35);letter-spacing:0.1em;text-transform:uppercase">{{ t.aboutPhoto }}</span>
+        </div>
+        <div>
+          <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:18px">
+            <span style="font-family:'Space Mono',monospace;color:var(--ac,#e3a23c);font-size:14px">06</span>
+            <span style="font-size:14px;text-transform:uppercase;letter-spacing:0.16em;color:rgba(243,235,221,0.55)">{{ t.s6kicker }}</span>
+          </div>
+          <h2 style="font-size:clamp(30px,3.6vw,48px);font-weight:800;letter-spacing:-0.02em;line-height:1.05;margin-bottom:24px">{{ t.aboutTitle }}</h2>
+          <p style="font-size:17px;line-height:1.7;color:rgba(243,235,221,0.65);margin-bottom:18px">{{ t.aboutP1 }}</p>
+          <p style="font-size:17px;line-height:1.7;color:rgba(243,235,221,0.65);margin-bottom:28px">{{ t.aboutP2 }}</p>
+          <div style="display:flex;flex-wrap:wrap;gap:10px">
+            <sc-for list="{{ aboutTags }}" as="tg" hint-placeholder-count="4">
+              <span style="font-size:13px;color:rgba(243,235,221,0.7);border:1px solid rgba(243,235,221,0.16);border-radius:999px;padding:8px 16px">{{ tg }}</span>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" data-screen-label="Contact" style="max-width:1280px;margin:0 auto;padding:40px 32px 96px">
+      <div style="background:#1d1610;border:1px solid rgba(243,235,221,0.1);border-radius:32px;padding:clamp(40px,6vw,80px);position:relative;overflow:hidden">
+        <svg viewBox="0 0 320 320" width="360" height="360" style="position:absolute;top:-90px;right:-70px;pointer-events:none;overflow:visible">
+          <circle cx="180" cy="150" r="100" fill="var(--ac,#e3a23c)" opacity="0.1" style="transform-origin:180px 150px;animation:wash 8s ease-in-out infinite"></circle>
+          <path d="M250 64 C 312 110, 314 206, 250 250 C 186 294, 96 290, 56 226" pathLength="100" fill="none" stroke="rgba(227,162,60,0.4)" stroke-width="3" stroke-linecap="round" stroke-dasharray="100" style="animation:inkdraw 9s ease-in-out infinite"></path>
+          <path d="M96 252 C 52 210, 58 132, 132 108" pathLength="100" fill="none" stroke="rgba(243,235,221,0.22)" stroke-width="2" stroke-linecap="round" stroke-dasharray="100" style="animation:inkdraw 7s ease-in-out infinite;animation-delay:-2s"></path>
+        </svg>
+        <div style="position:relative;max-width:720px">
+          <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:18px">
+            <span style="font-family:'Space Mono',monospace;color:var(--ac,#e3a23c);font-size:14px">07</span>
+            <span style="font-size:14px;text-transform:uppercase;letter-spacing:0.16em;color:rgba(243,235,221,0.55)">{{ t.s7kicker }}</span>
+          </div>
+          <h2 style="font-size:clamp(34px,4.6vw,64px);font-weight:900;letter-spacing:-0.025em;line-height:1;margin-bottom:22px;text-wrap:balance">{{ t.ctaPre }} <em style="font-style:italic;color:var(--ac,#e3a23c);font-weight:800">{{ t.ctaEm }}</em></h2>
+          <p style="font-size:18px;color:rgba(243,235,221,0.6);max-width:520px;margin-bottom:36px;line-height:1.55">{{ t.ctaSub }}</p>
+          <div style="display:flex;flex-wrap:wrap;gap:14px;margin-bottom:40px">
+            <a href="{{ wa }}" target="_blank" style="text-decoration:none;display:inline-flex;align-items:center;gap:10px;background:var(--ac,#e3a23c);color:#16110d;font-weight:700;font-size:16px;padding:16px 28px;border-radius:999px;transition:transform .2s" style-hover="text-decoration:none;display:inline-flex;align-items:center;gap:10px;background:var(--ac,#e3a23c);color:#16110d;font-weight:700;font-size:16px;padding:16px 28px;border-radius:999px;transform:translateY(-2px)">{{ t.ctaBtn }} <span>→</span></a>
+            <a href="tel:+995596855050" style="text-decoration:none;display:inline-flex;align-items:center;gap:10px;background:transparent;color:#f3ebdd;font-weight:600;font-size:16px;padding:16px 28px;border-radius:999px;border:1px solid rgba(243,235,221,0.2)" style-hover="text-decoration:none;display:inline-flex;align-items:center;gap:10px;background:rgba(243,235,221,0.06);color:#f3ebdd;font-weight:600;font-size:16px;padding:16px 28px;border-radius:999px;border:1px solid rgba(243,235,221,0.3)">+995 596 85 50 50</a>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:28px;font-size:15px">
+            <a href="mailto:besosurm12@gmail.com" style="color:rgba(243,235,221,0.7);text-decoration:none" style-hover="color:var(--ac,#e3a23c);text-decoration:none">besosurm12@gmail.com</a>
+            <a href="https://instagram.com/beso_surmava" target="_blank" style="color:rgba(243,235,221,0.7);text-decoration:none" style-hover="color:var(--ac,#e3a23c);text-decoration:none">@beso_surmava</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer style="border-top:1px solid rgba(243,235,221,0.08)">
+    <div style="max-width:1280px;margin:0 auto;padding:40px 32px;display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:12px">
+        <svg width="38" height="40" viewBox="0 0 64 66" fill="none" aria-label="ბესო" style="overflow:visible">
+          <ellipse cx="32" cy="38" rx="26" ry="23" fill="var(--ac,#e3a23c)" style="transform-origin:32px 38px;animation:wash 7s ease-in-out infinite"></ellipse>
+          <text x="32" y="35" text-anchor="middle" dominant-baseline="central" font-family="'Noto Serif Georgian',serif" font-weight="700" font-size="52" fill="#f3ebdd">ბ</text>
+        </svg>
+        <span style="font-size:13px;color:rgba(243,235,221,0.4)">{{ t.footTag }}</span>
+      </div>
+      <div style="font-size:13px;color:rgba(243,235,221,0.4)">{{ t.footRights }}</div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#e3a23c&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Theme&quot;},&quot;defaultLang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;ka&quot;,&quot;options&quot;:[&quot;ka&quot;,&quot;en&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Theme&quot;},&quot;showGraphic&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Theme&quot;}}">
+class Component extends DCLogic {
+  state = { lang: 'ka', openFaq: 0 };
+
+  componentDidMount() {
+    if (this.props.defaultLang && this.props.defaultLang !== this.state.lang) {
+      this.setState({ lang: this.props.defaultLang });
+    }
+  }
+
+  content() {
+    const wa = "https://wa.me/995596855050";
+    return {
+      ka: {
+        wa,
+        navCta: "დაკავშირება",
+        nav: [
+          { label: "მთავარი", href: "#top" },
+          { label: "სერვისები", href: "#services" },
+          { label: "ნამუშევრები", href: "#work" },
+          { label: "ფასები", href: "#pricing" },
+          { label: "კონტაქტი", href: "#contact" },
+        ],
+        heroEyebrow: "ვებ-სტუდია · ქუთაისი / თბილისი — ხელმისაწვდომი",
+        heroPre: "ვებსაიტები, რომლებიც",
+        heroEm: "მუშაობს",
+        heroPost: "თქვენი ბიზნესისთვის.",
+        heroSub: "ვაგებ პრემიუმ ვებსაიტებს სასტუმროების, რესტორნებისა და ბრენდებისთვის — სუფთა, სწრაფი, მობილურზე მორგებული და შედეგზე ორიენტირებული.",
+        heroCta1: "დავიწყოთ პროექტი",
+        heroCta2: "ნამუშევრების ნახვა",
+        scroll: "გადაახვიეთ",
+        stats: [
+          { num: "3+", label: "წელი" },
+          { num: "12", label: "პროექტი" },
+          { num: "24სთ", label: "პასუხი" },
+        ],
+        s1kicker: "რას ვაკეთებთ",
+        s1title: "სრული სერვისი — იდეიდან გაშვებამდე",
+        s1intro: "ერთ ადგილას თავს ვუყრით ყველაფერს, რაც თქვენს ბიზნესს ონლაინ წარმატებისთვის სჭირდება.",
+        services: [
+          { num: "01", icon: "✦", title: "ვებ დიზაინი", body: "თქვენს ბრენდზე მორგებული, თანამედროვე და სუფთა ინტერფეისი — სუფთა ტიპოგრაფიკით, თბილი ფერებით და გააზრებული გრიდით.", tag: "ბრენდინგი · ვიზუალური ენა" },
+          { num: "02", icon: "↗", title: "დეველოპმენტი", body: "Next.js-ით აგებული, საიმედო და სწრაფი საიტი, რომელიც წლების განმავლობაში გამართულად მუშაობს.", tag: "Next.js · Performance" },
+          { num: "03", icon: "▢", title: "მობილური ვერსია", body: "მთავარი ფოკუსი — ტელეფონის ეკრანი. სტუმრების უმეტესობა საიტს მობილურზე ხსნის.", tag: "Mobile-first" },
+          { num: "04", icon: "✧", title: "SEO & სიჩქარე", body: "Google-ში ხილვადობა და ელვისებური ჩატვირთვა — Core Web Vitals 90+, AVIF გამოსახულებები და სუფთა მეტა-ტეგები.", tag: "Core Web Vitals · Schema" },
+        ],
+        marquee: ["სასტუმროები", "რესტორნები", "კოტეჯები", "ბრენდინგი", "ვებსაიტები", "ქუთაისი"],
+        s2kicker: "ნამუშევრები",
+        s2title: "შერჩეული პროექტები",
+        s2intro: "ცოცხალი საიტები, რომლებიც უკვე მუშაობს და კლიენტებს ემსახურება.",
+        work: [
+          { num: "01", name: "Georgian House", type: "სასტუმრო · ქუთაისი", desc: "თანამედროვე საიტი ჯავშნებითა და ორი ენით.", shot: "Georgian House · screenshot", url: "https://georgianhousekutaisi.com" },
+          { num: "02", name: "Kvirike Hills", type: "ბუტიკ-სასტუმრო · კოტეჯები", desc: "სამენოვანი საიტი ცოცხალი ჯავშნებით.", shot: "Kvirike Hills · screenshot", url: "https://kvirikehills.com" },
+        ],
+        workNote: "ფარული პროექტი? ვაგებ ვებსაიტებს რესტორნებისთვის, კოტეჯებისთვის და მცირე ბრენდებისთვისაც —",
+        workNoteLink: "მომწერეთ",
+        s3kicker: "პროცესი",
+        s3title: "როგორ ვმუშაობ",
+        s3intro: "მარტივი, გასაგები ნაბიჯები — თქვენგან მხოლოდ ფოტოები და ინფორმაცია მჭირდება.",
+        process: [
+          { num: "01", title: "ვეცნობი თქვენს ბიზნესს", body: "მოკლე საუბარი ტელეფონით ან WhatsApp-ით: რა გჭირდებათ, ვინ არიან თქვენი სტუმრები და რა უნდა გააკეთოს საიტმა." },
+          { num: "02", title: "გიგზავნით შეთავაზებას", body: "ზუსტი ფასი, ვადა და რას მიიღებთ — ყველაფერი წინასწარ, მოულოდნელობების გარეშე." },
+          { num: "03", title: "თქვენ აგზავნით ფოტოებსა და ინფორმაციას", body: "ფოტოები, ფასები, ტექსტები. თუ რამე აკლია, დაგეხმარებით სტრუქტურისა და ტექსტების მომზადებაში." },
+          { num: "04", title: "ვაშენებ და გაჩვენებთ", body: "ვაგზავნი სამუშაო ვერსიის ბმულს — ნახულობთ ტელეფონზეც და კომპიუტერზეც, და ერთად ვასწორებთ დეტალებს." },
+          { num: "05", title: "საიტი ქვეყნდება", body: "ვაკავშირებ დომენს, ვაქვეყნებ საიტს და გადმოგცემთ ყველაფერს. სურვილისამებრ — შემდგომი მხარდაჭერა." },
+        ],
+        s4kicker: "ფასები",
+        s4title: "გამჭვირვალე პაკეტები",
+        s4intro: "საბოლოო ფასი დამოკიდებულია პროექტის მოცულობაზე — მომწერეთ და ერთ დღეში მიიღებთ ზუსტ შეთავაზებას.",
+        popular: "პოპულარული",
+        getOffer: "შეთავაზების მიღება",
+        pricing: [
+          { name: "სავიზიტო გვერდი", price: "600₾", from: "დან", popular: false, desc: "ერთგვერდიანი თანამედროვე საიტი მცირე ბიზნესისთვის, რომელსაც სწრაფად სჭირდება ონლაინ წარმომადგენლობა.", features: ["ერთგვერდიანი დიზაინი", "მობილურზე სრულად მორგებული", "გალერეა და ბიზნესის აღწერა", "კონტაქტი: ზარი, WhatsApp, რუკა", "მზადაა დაახლოებით 1 კვირაში"] },
+          { name: "სტანდარტული საიტი", price: "1000₾", from: "დან", popular: true, desc: "სრულფასოვანი ვებსაიტი სასტუმროსთვის, კოტეჯისთვის ან რესტორნისთვის — ყველაზე ხშირად ამას ირჩევენ.", features: ["4–6 გვერდი (ოთახები/მენიუ, გალერეა…)", "ფასები და დეტალური ინფორმაცია", "ჯავშნის / კონტაქტის ფორმა", "ორი ენა (ქართული + ინგლისური)", "საბაზისო SEO ოპტიმიზაცია", "მზადაა დაახლოებით 2 კვირაში"] },
+          { name: "პრემიუმ საიტი", price: "1500₾", from: "დან", popular: false, desc: "ყველაფერი სტანდარტული პაკეტიდან და დამატებით — ადმინ პანელი: ფასებსა და ფოტოებს თავად განაახლებთ.", features: ["ყველაფერი სტანდარტული პაკეტიდან", "ადმინ პანელი მართვისთვის", "ჯავშნის შეტყობინებები ელფოსტაზე", "მეტი გვერდი და ფუნქცია საჭიროებისას", "გაშვების შემდეგ მხარდაჭერა"] },
+        ],
+        priceNote: "დომენი და ჰოსტინგი ცალკე ღირს (წელიწადში დაახლოებით 40–100₾) — ყველაფერს მე მოგიგვარებთ.",
+        s5kicker: "გავრცელებული კითხვები",
+        s5title: "რასაც ხშირად მეკითხებიან",
+        faq: [
+          { num: "01", q: "რამდენ ხანში მზადდება საიტი?", a: "სავიზიტო გვერდი — დაახლოებით 1 კვირაში, სრულფასოვანი საიტი — 2 კვირაში. ზუსტ ვადას შეთავაზებაში გიწერთ, სანამ დავიწყებთ." },
+          { num: "02", q: "შემიძლია თვითონ განვაახლო კონტენტი?", a: "დიახ — პრემიუმ პაკეტში შედის ადმინ პანელი, საიდანაც ფასებსა და ფოტოებს თავად განაახლებთ, როცა გინდათ." },
+          { num: "03", q: "რა ღირს დომენი და ჰოსტინგი?", a: "წელიწადში დაახლოებით 40–100₾. ყველაფერს მე მოგიგვარებთ — თქვენ ტექნიკურ დეტალებზე ფიქრი არ გჭირდებათ." },
+          { num: "04", q: "რა მოხდება საიტის გაშვების შემდეგ?", a: "ვაკავშირებ დომენს, ვაქვეყნებ საიტს და გადმოგცემთ ყველა წვდომას. სურვილისამებრ — შემდგომი მხარდაჭერა და განახლებები." },
+          { num: "05", q: "მხოლოდ ქუთაისში მუშაობთ?", a: "არა — ვმუშაობ მთელ საქართველოში დისტანციურად. ცოცხალი შეხვედრა ქუთაისსა და თბილისში შესაძლებელია." },
+          { num: "06", q: "ვმუშაობთ ხელშეკრულებით?", a: "დიახ, სურვილისამებრ ვაფორმებთ მარტივ ხელშეკრულებას, სადაც გაწერილია ფასი, ვადა და სამუშაოს მოცულობა." },
+        ],
+        s6kicker: "ჩემ შესახებ",
+        aboutPhoto: "ბესოს ფოტო",
+        aboutTitle: "გამარჯობა, მე ბესო ვარ",
+        aboutP1: "ვებ-დეველოპერი ვარ ქუთაისიდან და ვქმნი პრაქტიკულ, თანამედროვე ვებსაიტებს ქართული ბიზნესებისთვის — ძირითადად სასტუმროებისთვის, კოტეჯებისთვის და რესტორნებისთვის. ვმუშაობ უახლესი ხელსაწყოებით, ვპასუხობ სწრაფად და თითოეული პროექტი ჩემთვის მთავარი საქმეა.",
+        aboutP2: "კარგად ვიცნობ ადგილობრივ ტურიზმს, ამიტომ ვაკეთებ არა უბრალოდ „ლამაზ საიტებს“, არამედ ისეთებს, რომლებიც სტუმრისთვის გასაგებია და რეალურ შედეგზეა ორიენტირებული — მეტი შეტყობინება, მეტი ჯავშანი, მეტი ნდობა.",
+        aboutTags: ["Next.js", "მობილურზე მორგებული", "ქუთაისი", "სწრაფი მხარდაჭერა"],
+        s7kicker: "მოდი ვისაუბროთ",
+        ctaPre: "მზად ხართ თქვენი ბიზნესის",
+        ctaEm: "საიტისთვის?",
+        ctaSub: "უფასო კონსულტაცია — მომწერეთ და ერთად განვიხილავთ, რა სჭირდება თქვენს ბიზნესს ონლაინ.",
+        ctaBtn: "WhatsApp-ით მოწერა",
+        footTag: "ვებ-სტუდია · ქუთაისი",
+        footRights: "© 2026 Beso Surmava. ყველა უფლება დაცულია.",
+      },
+      en: {
+        wa,
+        navCta: "Get in touch",
+        nav: [
+          { label: "Home", href: "#top" },
+          { label: "Services", href: "#services" },
+          { label: "Work", href: "#work" },
+          { label: "Pricing", href: "#pricing" },
+          { label: "Contact", href: "#contact" },
+        ],
+        heroEyebrow: "Web Studio · Kutaisi / Tbilisi — Available",
+        heroPre: "Websites that",
+        heroEm: "work",
+        heroPost: "for your business.",
+        heroSub: "I build premium websites for hotels, restaurants and brands — clean, fast, mobile-first and built to drive real results.",
+        heroCta1: "Start a project",
+        heroCta2: "View work",
+        scroll: "Scroll",
+        stats: [
+          { num: "3+", label: "Years" },
+          { num: "12", label: "Projects" },
+          { num: "24h", label: "Response" },
+        ],
+        s1kicker: "What I do",
+        s1title: "Full service — from idea to launch",
+        s1intro: "Everything your business needs to succeed online, handled in one place.",
+        services: [
+          { num: "01", icon: "✦", title: "Web Design", body: "A modern, clean interface tailored to your brand — refined typography, warm colors and a considered grid.", tag: "Branding · Visual language" },
+          { num: "02", icon: "↗", title: "Development", body: "Reliable, fast sites built with Next.js that keep running smoothly for years.", tag: "Next.js · Performance" },
+          { num: "03", icon: "▢", title: "Mobile Version", body: "The phone screen comes first — most of your guests open the site on mobile.", tag: "Mobile-first" },
+          { num: "04", icon: "✧", title: "SEO & Speed", body: "Visibility on Google and lightning-fast loads — Core Web Vitals 90+, AVIF images and clean meta tags.", tag: "Core Web Vitals · Schema" },
+        ],
+        marquee: ["Hotels", "Restaurants", "Cottages", "Branding", "Websites", "Kutaisi"],
+        s2kicker: "Work",
+        s2title: "Selected projects",
+        s2intro: "Live sites that are already up and serving real clients.",
+        work: [
+          { num: "01", name: "Georgian House", type: "Hotel · Kutaisi", desc: "A modern site with bookings and two languages.", shot: "Georgian House · screenshot", url: "https://georgianhousekutaisi.com" },
+          { num: "02", name: "Kvirike Hills", type: "Boutique hotel · Cottages", desc: "A trilingual site with live bookings.", shot: "Kvirike Hills · screenshot", url: "https://kvirikehills.com" },
+        ],
+        workNote: "A private project? I also build sites for restaurants, cottages and small brands —",
+        workNoteLink: "get in touch",
+        s3kicker: "Process",
+        s3title: "How I work",
+        s3intro: "Simple, clear steps — all I need from you are photos and information.",
+        process: [
+          { num: "01", title: "I learn about your business", body: "A short call by phone or WhatsApp: what you need, who your guests are and what the site should do." },
+          { num: "02", title: "I send you a proposal", body: "Exact price, timeline and what you'll get — all upfront, with no surprises." },
+          { num: "03", title: "You send photos and information", body: "Photos, prices, texts. If anything is missing, I'll help you prepare the structure and copy." },
+          { num: "04", title: "I build and show you", body: "I send a link to a working version — you review it on phone and desktop, and we refine the details together." },
+          { num: "05", title: "The site goes live", body: "I connect the domain, publish the site and hand everything over. Ongoing support if you want it." },
+        ],
+        s4kicker: "Pricing",
+        s4title: "Transparent packages",
+        s4intro: "Final price depends on project scope — message me and get an exact proposal within a day.",
+        popular: "Popular",
+        getOffer: "Get a proposal",
+        pricing: [
+          { name: "Landing page", price: "600₾", from: "from", popular: false, desc: "A modern one-page site for a small business that needs an online presence fast.", features: ["One-page design", "Fully mobile-optimized", "Gallery and business description", "Contact: call, WhatsApp, map", "Ready in about 1 week"] },
+          { name: "Standard site", price: "1000₾", from: "from", popular: true, desc: "A full website for a hotel, cottage or restaurant — the most popular choice.", features: ["4–6 pages (rooms/menu, gallery…)", "Prices and detailed information", "Booking / contact form", "Two languages (Georgian + English)", "Basic SEO optimization", "Ready in about 2 weeks"] },
+          { name: "Premium site", price: "1500₾", from: "from", popular: false, desc: "Everything in Standard plus an admin panel — update prices and photos yourself, whenever you like.", features: ["Everything in Standard", "Admin panel for management", "Booking notifications by email", "More pages and features as needed", "Post-launch support"] },
+        ],
+        priceNote: "Domain and hosting are separate (roughly 40–100₾ per year) — I'll handle all of it for you.",
+        s5kicker: "FAQ",
+        s5title: "What I'm often asked",
+        faq: [
+          { num: "01", q: "How long does a site take?", a: "A landing page takes about 1 week, a full site about 2 weeks. I give you the exact timeline in the proposal before we start." },
+          { num: "02", q: "Can I update the content myself?", a: "Yes — the Premium package includes an admin panel where you can update prices and photos yourself, anytime." },
+          { num: "03", q: "What do domain and hosting cost?", a: "Roughly 40–100₾ per year. I handle all of it — you don't have to think about the technical details." },
+          { num: "04", q: "What happens after launch?", a: "I connect the domain, publish the site and hand over all the access. Ongoing support and updates if you want them." },
+          { num: "05", q: "Do you only work in Kutaisi?", a: "No — I work across Georgia remotely. In-person meetings are possible in Kutaisi and Tbilisi." },
+          { num: "06", q: "Do we work with a contract?", a: "Yes, on request we sign a simple contract covering price, timeline and scope of work." },
+        ],
+        s6kicker: "About me",
+        aboutPhoto: "Beso · photo",
+        aboutTitle: "Hi, I'm Beso",
+        aboutP1: "I'm a web developer from Kutaisi building practical, modern websites for Georgian businesses — mainly hotels, cottages and restaurants. I work with the latest tools, respond fast, and treat every project as my main job.",
+        aboutP2: "I know local tourism well, so I don't just make “pretty sites” — I make ones that are clear to guests and built for real results: more messages, more bookings, more trust.",
+        aboutTags: ["Next.js", "Mobile-first", "Kutaisi", "Fast support"],
+        s7kicker: "Let's talk",
+        ctaPre: "Ready for your business",
+        ctaEm: "website?",
+        ctaSub: "Free consultation — message me and we'll talk through what your business needs online.",
+        ctaBtn: "Message on WhatsApp",
+        footTag: "Web Studio · Kutaisi",
+        footRights: "© 2026 Beso Surmava. All rights reserved.",
+      },
+    };
+  }
+
+  renderVals() {
+    const accent = this.props.accent ?? '#e3a23c';
+    const lang = this.state.lang;
+    const t = this.content()[lang];
+    const isKa = lang === 'ka';
+
+    const pillBase = "font-size:13.5px;font-weight:700;letter-spacing:0.07em;transition:color .2s;";
+    const kaPill = pillBase + (isKa ? "color:var(--ac," + accent + ");" : "color:rgba(243,235,221,0.4);");
+    const enPill = pillBase + (!isKa ? "color:var(--ac," + accent + ");" : "color:rgba(243,235,221,0.4);");
+
+    const cardBase = "background:#1d1610;border-radius:24px;padding:36px 32px;display:flex;flex-direction:column;";
+    const pricing = t.pricing.map(pl => ({
+      ...pl,
+      cardStyle: cardBase + (pl.popular
+        ? "border:1.5px solid var(--ac," + accent + ");box-shadow:0 0 0 4px rgba(227,162,60,0.08);"
+        : "border:1px solid rgba(243,235,221,0.1);"),
+      btnStyle: "text-decoration:none;text-align:center;font-weight:700;font-size:15px;padding:14px 20px;border-radius:999px;transition:transform .2s;" + (pl.popular
+        ? "background:var(--ac," + accent + ");color:#16110d;"
+        : "background:rgba(243,235,221,0.08);color:#f3ebdd;border:1px solid rgba(243,235,221,0.16);"),
+    }));
+
+    const faqItems = t.faq.map((f, i) => {
+      const open = this.state.openFaq === i;
+      return {
+        ...f,
+        open,
+        idx: i,
+        iconStyle: "font-size:26px;font-weight:300;color:var(--ac," + accent + ");transition:transform .25s;display:inline-block;transform:rotate(" + (open ? "45deg" : "0deg") + ");flex-shrink:0",
+        answerStyle: "overflow:hidden;transition:max-height .3s ease,opacity .25s;max-height:" + (open ? "240px" : "0") + ";opacity:" + (open ? "1" : "0"),
+      };
+    });
+
+    return {
+      accent, t, lang, isKa,
+      wa: t.wa,
+      nav: t.nav,
+      stats: t.stats,
+      services: t.services,
+      work: t.work,
+      process: t.process,
+      aboutTags: t.aboutTags,
+      pricing,
+      faqItems,
+      marquee: t.marquee,
+      kaPill, enPill,
+      showGraphic: this.props.showGraphic ?? true,
+      toggleLang: () => this.setState(s => ({ lang: s.lang === 'ka' ? 'en' : 'ka' })),
+      toggleFaq: (e) => {
+        const btn = e.currentTarget;
+        const scope = btn.closest('#faq') || document;
+        const i = [...scope.querySelectorAll('button')].indexOf(btn);
+        this.setState(s => ({ openFaq: s.openFaq === i ? null : i }));
+      },
+    };
+  }
+}
+</script>
+</body>
+</html>

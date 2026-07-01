@@ -1,75 +1,100 @@
 "use client";
 
-import { useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
-import SectionHead from "@/components/studio/SectionHead";
-import { spring } from "@/lib/motion";
+import { useLayoutEffect, useRef, useState } from "react";
+import Kicker from "@/components/studio/Kicker";
 import { copy, type Lang } from "@/lib/copy";
 
-function FaqItem({ q, a, index }: { q: string; a: string; index: number }) {
-  const [open, setOpen] = useState(false);
+// FAQ (05) — აკორდეონი. თავიდან პირველი ღიაა; ერთდროულად მხოლოდ ერთი იშლება.
+// "+" ტრიალდება 45°-ით. პასუხის სიმაღლეს ვზომავ (fixed max-height არ ჭრის გრძელ ტექსტს).
+export default function FAQ({ lang }: { lang: Lang }) {
+  const f = copy[lang].faq;
+  const [open, setOpen] = useState<number | null>(0);
+
   return (
-    <li className="border-t border-line">
-      <button
-        type="button"
-        onClick={() => setOpen((v) => !v)}
-        aria-expanded={open}
-        className="flex w-full items-start justify-between gap-6 py-6 text-left transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
-      >
-        <span className="flex items-baseline gap-4">
-          <span className="font-serif text-sm font-bold tracking-tight text-accent">
-            {String(index + 1).padStart(2, "0")}
-          </span>
-          <span className="font-serif text-lg font-bold tracking-tight text-ink sm:text-xl">
-            {q}
-          </span>
-        </span>
-        <motion.span
-          aria-hidden
-          animate={{ rotate: open ? 45 : 0 }}
-          transition={spring.snappy}
-          className="mt-1 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-line text-ink"
-        >
-          +
-        </motion.span>
-      </button>
-      <AnimatePresence initial={false}>
-        {open && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-            className="overflow-hidden"
-          >
-            <p className="pb-7 pl-10 pr-12 text-sm leading-7 text-ink-soft sm:text-base">
-              {a}
-            </p>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </li>
+    <section id="faq" className="border-y border-[rgba(243,235,221,0.07)] bg-raised">
+      <div className="mx-auto max-w-[920px] px-5 py-16 md:px-8 md:py-[88px]">
+        <Kicker number={f.number} label={f.kicker} />
+        <h2 className="mb-[40px] text-[clamp(30px,3.6vw,52px)] font-extrabold leading-[1.05] tracking-[-0.02em]">
+          {f.title}
+        </h2>
+        <div className="flex flex-col">
+          {f.items.map((q, i) => (
+            <FaqRow
+              key={q.num}
+              num={q.num}
+              q={q.q}
+              a={q.a}
+              isOpen={open === i}
+              onToggle={() => setOpen((cur) => (cur === i ? null : i))}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
-export default function FAQ({ lang }: { lang: Lang }) {
-  const t = copy[lang].faq;
-  return (
-    <section id="faq" className="px-5 py-28 sm:py-36">
-      <div className="mx-auto max-w-3xl">
-        <SectionHead
-          number={t.number}
-          eyebrow={t.eyebrow}
-          title={t.title}
-          subtitle={t.subtitle}
-        />
+function FaqRow({
+  num,
+  q,
+  a,
+  isOpen,
+  onToggle,
+}: {
+  num: string;
+  q: string;
+  a: string;
+  isOpen: boolean;
+  onToggle: () => void;
+}) {
+  const inner = useRef<HTMLParagraphElement>(null);
+  const [height, setHeight] = useState(0);
 
-        <ul className="mt-14 border-b border-line">
-          {t.items.map((f, i) => (
-            <FaqItem key={f.q} q={f.q} a={f.a} index={i} />
-          ))}
-        </ul>
+  useLayoutEffect(() => {
+    const el = inner.current;
+    if (!el) return;
+    const measure = () => setHeight(el.scrollHeight);
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  return (
+    <div className="border-t border-[rgba(243,235,221,0.1)]">
+      <button
+        type="button"
+        onClick={onToggle}
+        aria-expanded={isOpen}
+        className="flex w-full cursor-pointer items-center justify-between gap-5 px-1 py-[26px] text-left text-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ac)] focus-visible:ring-offset-2 focus-visible:ring-offset-raised"
+      >
+        <span className="flex items-baseline gap-4">
+          <span className="font-mono text-[13px] text-[var(--ac)]">{num}</span>
+          <span className="text-[18.5px] font-semibold">{q}</span>
+        </span>
+        <span
+          className="inline-block flex-shrink-0 text-[26px] font-light text-[var(--ac)] transition-transform duration-[250ms]"
+          style={{ transform: isOpen ? "rotate(45deg)" : "rotate(0deg)" }}
+          aria-hidden
+        >
+          +
+        </span>
+      </button>
+      <div
+        className="overflow-hidden"
+        style={{
+          maxHeight: isOpen ? height : 0,
+          opacity: isOpen ? 1 : 0,
+          transition: "max-height 0.3s ease, opacity 0.25s",
+        }}
+      >
+        <p
+          ref={inner}
+          className="pb-[26px] pl-[46px] pr-1 text-[16px] leading-[1.65] text-[rgba(243,235,221,0.6)]"
+        >
+          {a}
+        </p>
       </div>
-    </section>
+    </div>
   );
 }

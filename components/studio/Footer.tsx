@@ -1,26 +1,18 @@
-import { site } from "@/lib/site";
+import InkMark from "@/components/studio/InkMark";
 import { copy, type Lang } from "@/lib/copy";
 
+// FOOTER — პატარა ბ ნიშანი + tag მარცხნივ, copyright მარჯვნივ, ზედა hairline.
 export default function Footer({ lang }: { lang: Lang }) {
-  const t = copy[lang].footer;
-  const year = new Date().getFullYear();
+  const f = copy[lang].footer;
+
   return (
-    <footer className="border-t border-line px-5 py-12">
-      <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-6 text-sm text-ink-soft sm:flex-row sm:items-center">
-        <div>
-          <p className="font-serif text-2xl font-bold tracking-tight text-ink">
-            ბესო<span className="text-accent">.</span>
-          </p>
-          <p className="mt-1 text-xs text-ink-dim">
-            {t.role} · {t.city}
-          </p>
+    <footer className="border-t border-[rgba(243,235,221,0.08)]">
+      <div className="mx-auto flex max-w-[1280px] flex-wrap items-center justify-between gap-5 px-5 py-[40px] md:px-8">
+        <div className="flex items-center gap-3">
+          <InkMark width={38} height={40} rx={26} ry={23} washDur="7s" />
+          <span className="text-[13px] text-[rgba(243,235,221,0.4)]">{f.tag}</span>
         </div>
-        <div className="flex flex-col gap-1 text-xs text-ink-dim sm:items-end">
-          <p>
-            © {year} {site.name}. {t.rights}
-          </p>
-          <p>{t.builtWith}</p>
-        </div>
+        <div className="text-[13px] text-[rgba(243,235,221,0.4)]">{f.rights}</div>
       </div>
     </footer>
   );

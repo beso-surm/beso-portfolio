@@ -1,71 +1,38 @@
-"use client";
-
-import { useRef } from "react";
-import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
-import {
-  staggerContainer,
-  staggerItem,
-  viewportOnce,
-} from "@/lib/motion";
-import SectionHead from "@/components/studio/SectionHead";
+import Kicker from "@/components/studio/Kicker";
 import { copy, type Lang } from "@/lib/copy";
 
+// PROCESS (03) — ალტ. ფონი (#1b1510). ვერტიკალურად დაწყობილი 5 დანომრილი ნაბიჯი.
 export default function Process({ lang }: { lang: Lang }) {
-  const t = copy[lang].process;
-  const ref = useRef<HTMLOListElement>(null);
-  const reduce = useReducedMotion();
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start 70%", "end 85%"],
-  });
-  const lineScale = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  const p = copy[lang].process;
 
   return (
-    <section id="process" className="bg-paper-soft px-5 py-28 sm:py-36">
-      <div className="mx-auto max-w-3xl">
-        <SectionHead
-          number={t.number}
-          eyebrow={t.eyebrow}
-          title={t.title}
-          subtitle={t.subtitle}
-        />
+    <section
+      id="process"
+      className="border-y border-[rgba(243,235,221,0.07)] bg-raised"
+    >
+      <div className="mx-auto max-w-[1280px] px-5 py-16 md:px-8 md:py-[88px]">
+        <Kicker number={p.number} label={p.kicker} />
+        <h2 className="mb-[14px] max-w-[760px] text-[clamp(30px,3.6vw,52px)] font-extrabold leading-[1.05] tracking-[-0.02em]">
+          {p.title}
+        </h2>
+        <p className="mb-[52px] max-w-[560px] text-[18px] text-[rgba(243,235,221,0.55)]">{p.intro}</p>
 
-        <motion.ol
-          ref={ref}
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="show"
-          viewport={viewportOnce}
-          className="relative mt-16 space-y-10"
-        >
-          <span
-            aria-hidden
-            className="absolute bottom-5 left-[19px] top-5 w-px bg-line"
-          />
-          <motion.span
-            aria-hidden
-            style={reduce ? undefined : { scaleY: lineScale }}
-            className="absolute bottom-5 left-[19px] top-5 w-px origin-top bg-accent"
-          />
-
-          {t.steps.map((step, i) => (
-            <motion.li
-              key={step.title}
-              variants={staggerItem}
-              className="relative flex gap-6"
+        <div className="flex flex-col">
+          {p.steps.map((step) => (
+            <div
+              key={step.num}
+              className="grid grid-cols-[80px_1fr] gap-7 border-t border-[rgba(243,235,221,0.1)] py-7"
             >
-              <span className="z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-line bg-card font-serif text-sm font-bold text-accent shadow-sm">
-                {String(i + 1).padStart(2, "0")}
+              <span className="text-[40px] font-extrabold leading-none tracking-[-0.02em] text-[var(--ac)]">
+                {step.num}
               </span>
-              <div className="pt-1.5">
-                <h3 className="font-serif text-xl font-bold text-ink">{step.title}</h3>
-                <p className="mt-2 text-sm leading-7 text-ink-soft">
-                  {step.description}
-                </p>
+              <div className="max-w-[640px]">
+                <h3 className="mb-2 text-[22px] font-bold">{step.title}</h3>
+                <p className="text-[16px] leading-[1.6] text-[rgba(243,235,221,0.58)]">{step.body}</p>
               </div>
-            </motion.li>
+            </div>
           ))}
-        </motion.ol>
+        </div>
       </div>
     </section>
   );

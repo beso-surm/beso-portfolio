@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@400;500;700;900&family=Noto+Serif+Georgian:wght@500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<meta name="design_doc_mode" content="canvas">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#16110d}
+  @keyframes floaty{0%,100%{transform:translateY(0) rotate(-1.5deg)}50%{transform:translateY(-9px) rotate(1.5deg)}}
+  @keyframes inkdraw{0%{stroke-dashoffset:100}48%{stroke-dashoffset:0}52%{stroke-dashoffset:0}100%{stroke-dashoffset:-100}}
+  @keyframes wash{0%,100%{opacity:.12;transform:scale(.86)}50%{opacity:.32;transform:scale(1.1)}}
+  @keyframes dotpulse{0%,100%{transform:scale(.82);opacity:.7}50%{transform:scale(1.12);opacity:1}}
+  @keyframes inkhold{0%{stroke-dashoffset:100}35%{stroke-dashoffset:0}100%{stroke-dashoffset:0}}
+</style>
+</helmet>
+<div style="--ac:#e3a23c;background:#16110d;color:#f3ebdd;font-family:'Noto Sans Georgian',system-ui,sans-serif;min-height:100vh;padding:56px 48px 72px;-webkit-font-smoothing:antialiased">
+
+  <div style="max-width:1200px;margin:0 auto 44px">
+    <div style="font-family:'Space Mono',monospace;font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ac);margin-bottom:14px">ბ · Logo board</div>
+    <h1 style="font-family:'Noto Serif Georgian',serif;font-size:46px;font-weight:700;letter-spacing:-0.02em;margin-bottom:12px">ხუთი მიმართულება ბ-სთვის</h1>
+    <p style="font-size:17px;color:rgba(243,235,221,0.6);max-width:620px;line-height:1.55">No more underline swoosh. Each mark below is the ბ letterform with a different crafted detail and motion. Pick one — just tell me its number (e.g. <span style="color:var(--ac);font-weight:600">1c</span>) and I'll set it across the whole site.</p>
+  </div>
+
+  <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px">
+
+    <!-- 1a two-tone -->
+    <div id="1a" style="background:#1d1610;border:1px solid rgba(243,235,221,0.1);border-radius:22px;padding:30px;display:flex;flex-direction:column;min-height:380px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <span style="font-family:'Space Mono',monospace;font-size:13px;font-weight:700;color:#16110d;background:var(--ac);padding:3px 10px;border-radius:7px">1a</span>
+        <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(243,235,221,0.4)">Two-tone</span>
+      </div>
+      <div style="flex:1;display:flex;align-items:center;justify-content:center">
+        <svg viewBox="0 0 120 130" width="150" style="overflow:visible;animation:floaty 6s ease-in-out infinite">
+          <defs><linearGradient id="dip1a" x1="0" y1="0" x2="0" y2="1"><stop offset="0.52" stop-color="#f3ebdd"></stop><stop offset="0.52" stop-color="#e3a23c"></stop></linearGradient></defs>
+          <text x="60" y="68" text-anchor="middle" dominant-baseline="central" font-family="'Noto Serif Georgian',serif" font-weight="700" font-size="120" fill="url(#dip1a)">ბ</text>
+        </svg>
+      </div>
+      <div style="display:flex;align-items:center;gap:9px;margin-top:14px;padding-top:16px;border-top:1px solid rgba(243,235,221,0.08)">
+        <span style="font-family:'Noto Serif Georgian',serif;font-weight:700;font-size:21px">ბესო</span>
+        <span style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(243,235,221,0.4)">Web Studio</span>
+      </div>
+      <p style="font-size:13px;color:rgba(243,235,221,0.5);margin-top:10px;line-height:1.5">The lower half dipped in amber ink, the top cream — a clean horizontal two-tone.</p>
+    </div>
+
+    <!-- 1b ink dot -->
+    <div id="1b" style="background:#1d1610;border:1px solid rgba(243,235,221,0.1);border-radius:22px;padding:30px;display:flex;flex-direction:column;min-height:380px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <span style="font-family:'Space Mono',monospace;font-size:13px;font-weight:700;color:#16110d;background:var(--ac);padding:3px 10px;border-radius:7px">1b</span>
+        <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(243,235,221,0.4)">Ink dot</span>
+      </div>
+      <div style="flex:1;display:flex;align-items:center;justify-content:center">
+        <svg viewBox="0 0 120 130" width="150" style="overflow:visible;animation:floaty 6.4s ease-in-out infinite">
+          <text x="56" y="68" text-anchor="middle" dominant-baseline="central" font-family="'Noto Serif Georgian',serif" font-weight="700" font-size="120" fill="#f3ebdd">ბ</text>
+          <circle cx="96" cy="30" r="8" fill="var(--ac)" style="transform-origin:96px 30px;animation:dotpulse 3.4s ease-in-out infinite"></circle>
+        </svg>
+      </div>
+      <div style="display:flex;align-items:center;gap:9px;margin-top:14px;padding-top:16px;border-top:1px solid rgba(243,235,221,0.08)">
+        <span style="font-family:'Noto Serif Georgian',serif;font-weight:700;font-size:21px">ბესო</span>
+        <span style="display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--ac);margin-left:-4px;margin-bottom:12px"></span>
+        <span style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(243,235,221,0.4)">Web Studio</span>
+      </div>
+      <p style="font-size:13px;color:rgba(243,235,221,0.5);margin-top:10px;line-height:1.5">A single amber ink dot beside the ბ. Minimal, confident, gently pulses.</p>
+    </div>
+
+    <!-- 1c terminal flourish -->
+    <div id="1c" style="background:#1d1610;border:1px solid rgba(243,235,221,0.1);border-radius:22px;padding:30px;display:flex;flex-direction:column;min-height:380px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <span style="font-family:'Space Mono',monospace;font-size:13px;font-weight:700;color:#16110d;background:var(--ac);padding:3px 10px;border-radius:7px">1c</span>
+        <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(243,235,221,0.4)">Flourish</span>
+      </div>
+      <div style="flex:1;display:flex;align-items:center;justify-content:center">
+        <svg viewBox="0 0 130 130" width="158" style="overflow:visible;animation:floaty 6.8s ease-in-out infinite">
+          <text x="56" y="70" text-anchor="middle" dominant-baseline="central" font-family="'Noto Serif Georgian',serif" font-weight="700" font-size="120" fill="#f3ebdd">ბ</text>
+          <path d="M70 32 C 86 14, 110 14, 119 34" pathLength="100" fill="none" stroke="var(--ac)" stroke-width="5" stroke-linecap="round" stroke-dasharray="100" style="animation:inkhold 4.5s ease-in-out infinite"></path>
+        </svg>
+      </div>
+      <div style="display:flex;align-items:center;gap:9px;margin-top:14px;padding-top:16px;border-top:1px solid rgba(243,235,221,0.08)">
+        <span style="font-family:'Noto Serif Georgian',serif;font-weight:700;font-size:21px">ბესო</span>
+        <span style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(243,235,221,0.4)">Web Studio</span>
+      </div>
+      <p style="font-size:13px;color:rgba(243,235,221,0.5);margin-top:10px;line-height:1.5">A calligraphic flick growing off the ბ's top terminal — draws itself in ink.</p>
+    </div>
+
+    <!-- 1d ink blot -->
+    <div id="1d" style="background:#1d1610;border:1px solid rgba(243,235,221,0.1);border-radius:22px;padding:30px;display:flex;flex-direction:column;min-height:380px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <span style="font-family:'Space Mono',monospace;font-size:13px;font-weight:700;color:#16110d;background:var(--ac);padding:3px 10px;border-radius:7px">1d</span>
+        <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(243,235,221,0.4)">Ink wash</span>
+      </div>
+      <div style="flex:1;display:flex;align-items:center;justify-content:center">
+        <svg viewBox="0 0 130 140" width="158" style="overflow:visible">
+          <ellipse cx="62" cy="78" rx="60" ry="52" fill="var(--ac)" style="transform-origin:62px 78px;animation:wash 6s ease-in-out infinite"></ellipse>
+          <text x="60" y="72" text-anchor="middle" dominant-baseline="central" font-family="'Noto Serif Georgian',serif" font-weight="700" font-size="122" fill="#f3ebdd" style="animation:floaty 6.2s ease-in-out infinite;transform-origin:60px 72px">ბ</text>
+        </svg>
+      </div>
+      <div style="display:flex;align-items:center;gap:9px;margin-top:14px;padding-top:16px;border-top:1px solid rgba(243,235,221,0.08)">
+        <span style="font-family:'Noto Serif Georgian',serif;font-weight:700;font-size:21px">ბესო</span>
+        <span style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(243,235,221,0.4)">Web Studio</span>
+      </div>
+      <p style="font-size:13px;color:rgba(243,235,221,0.5);margin-top:10px;line-height:1.5">The ბ floats over a soft amber ink-wash that breathes — ties straight to the hero.</p>
+    </div>
+
+    <!-- 1e bold monochrome -->
+    <div id="1e" style="background:#1d1610;border:1px solid rgba(243,235,221,0.1);border-radius:22px;padding:30px;display:flex;flex-direction:column;min-height:380px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <span style="font-family:'Space Mono',monospace;font-size:13px;font-weight:700;color:#16110d;background:#f3ebdd;padding:3px 10px;border-radius:7px">1e</span>
+        <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(243,235,221,0.4)">Bold mono</span>
+      </div>
+      <div style="flex:1;display:flex;align-items:center;justify-content:center">
+        <svg viewBox="0 0 120 130" width="150" style="overflow:visible;animation:floaty 6.6s ease-in-out infinite">
+          <text x="60" y="68" text-anchor="middle" dominant-baseline="central" font-family="'Noto Serif Georgian',serif" font-weight="900" font-size="124" fill="#f3ebdd">ბ</text>
+        </svg>
+      </div>
+      <div style="display:flex;align-items:center;gap:9px;margin-top:14px;padding-top:16px;border-top:1px solid rgba(243,235,221,0.08)">
+        <span style="font-family:'Noto Serif Georgian',serif;font-weight:900;font-size:21px">ბესო</span>
+        <span style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(243,235,221,0.4)">Web Studio</span>
+      </div>
+      <p style="font-size:13px;color:rgba(243,235,221,0.5);margin-top:10px;line-height:1.5">Heaviest serif weight, all cream, no amber. Quiet and editorial — lets motion carry it.</p>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

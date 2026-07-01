@@ -1,53 +1,42 @@
-import Reveal from "@/components/motion/Reveal";
-import WordReveal from "@/components/motion/WordReveal";
+import Kicker from "@/components/studio/Kicker";
 import { copy, type Lang } from "@/lib/copy";
 
+const STRIPES =
+  "repeating-linear-gradient(135deg,rgba(243,235,221,0.05) 0 14px,rgba(243,235,221,0.02) 14px 28px)";
+
+// ABOUT (06) — ორსვეტიანი: ფოტოს placeholder (4:5) + ბიო + tag pills.
+// ფოტო ჯერ არ არსებობს → striped placeholder (handoff-ის მიხედვით).
 export default function About({ lang }: { lang: Lang }) {
-  const t = copy[lang].about;
+  const a = copy[lang].about;
+
   return (
-    <section id="about" className="bg-paper-soft px-5 py-28 sm:py-36">
-      <div className="mx-auto max-w-4xl">
-        <div className="grid gap-10 sm:grid-cols-[auto_1fr] sm:items-start sm:gap-12">
-          <Reveal>
-            <div className="flex h-32 w-32 items-center justify-center rounded-[2rem] bg-ink font-serif text-6xl font-bold text-paper shadow-xl shadow-ink/10">
-              ბ
-            </div>
-          </Reveal>
+    <section id="about" className="mx-auto max-w-[1280px] px-5 py-16 md:px-8 md:py-[88px]">
+      <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-[56px]">
+        <div
+          className="flex aspect-[4/5] items-center justify-center rounded-[24px] border border-[rgba(243,235,221,0.08)]"
+          style={{ backgroundImage: STRIPES }}
+        >
+          <span className="font-mono text-[12px] uppercase tracking-[0.1em] text-[rgba(243,235,221,0.35)]">
+            {a.photo}
+          </span>
+        </div>
 
-          <div>
-            <Reveal
-              as="div"
-              className="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-ink-soft"
-            >
-              <span className="font-serif text-base font-bold tracking-tight text-accent">
-                {t.number}
-              </span>
-              <span aria-hidden className="h-px w-8 bg-line" />
-              <span>{t.eyebrow}</span>
-            </Reveal>
-            <h2 className="mt-5 font-serif text-4xl font-bold tracking-[-0.02em] text-ink sm:text-5xl">
-              <WordReveal text={t.title} />
-            </h2>
-            {t.paragraphs.map((p, i) => (
-              <Reveal
-                key={i}
-                as="p"
-                className={`${i === 0 ? "drop-cap mt-6" : "mt-3"} text-base leading-7 text-ink-soft`}
+        <div>
+          <Kicker number={a.number} label={a.kicker} />
+          <h2 className="mb-6 text-[clamp(30px,3.6vw,48px)] font-extrabold leading-[1.05] tracking-[-0.02em]">
+            {a.title}
+          </h2>
+          <p className="mb-[18px] text-[17px] leading-[1.7] text-[rgba(243,235,221,0.65)]">{a.p1}</p>
+          <p className="mb-7 text-[17px] leading-[1.7] text-[rgba(243,235,221,0.65)]">{a.p2}</p>
+          <div className="flex flex-wrap gap-[10px]">
+            {a.tags.map((tag) => (
+              <span
+                key={tag}
+                className="rounded-full border border-[rgba(243,235,221,0.16)] px-4 py-2 text-[13px] text-[rgba(243,235,221,0.7)]"
               >
-                {p}
-              </Reveal>
+                {tag}
+              </span>
             ))}
-
-            <Reveal className="mt-7 flex flex-wrap gap-2">
-              {t.chips.map((chip) => (
-                <span
-                  key={chip}
-                  className="rounded-full border border-line bg-card px-3.5 py-1.5 text-xs text-ink-soft"
-                >
-                  {chip}
-                </span>
-              ))}
-            </Reveal>
           </div>
         </div>
       </div>

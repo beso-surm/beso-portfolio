@@ -1,139 +1,71 @@
-"use client";
-
-import { motion } from "motion/react";
-import {
-  staggerContainer,
-  staggerItem,
-  tapScaleSubtle,
-  viewportOnce,
-} from "@/lib/motion";
-import SectionHead from "@/components/studio/SectionHead";
-import Pressable from "@/components/motion/Pressable";
-import CountUp from "@/components/motion/CountUp";
+import Kicker from "@/components/studio/Kicker";
+import { whatsappLink } from "@/lib/site";
 import { copy, type Lang } from "@/lib/copy";
 
-const Check = () => (
-  <svg
-    viewBox="0 0 20 20"
-    fill="currentColor"
-    className="mt-0.5 h-4 w-4 shrink-0 text-accent"
-    aria-hidden
-  >
-    <path
-      fillRule="evenodd"
-      d="M16.7 5.3a1 1 0 0 1 0 1.4l-7 7a1 1 0 0 1-1.4 0l-3-3a1 1 0 1 1 1.4-1.4L9 11.6l6.3-6.3a1 1 0 0 1 1.4 0Z"
-      clipRule="evenodd"
-    />
-  </svg>
-);
-
+// PRICING (04) — 3 პაკეტი; შუა ("პოპულარული") აქცენტისფერი ბარდერით + ring + badge.
 export default function Pricing({ lang }: { lang: Lang }) {
-  const t = copy[lang].pricing;
-  const contactHref = lang === "en" ? "/en#contact" : "#contact";
-
-  // ფასი — KA: "600₾-დან" (suffix); EN: "from ₾600" (prefix)
-  const renderPrice = (price: number) =>
-    lang === "en" ? (
-      <CountUp value={price} prefix="₾" />
-    ) : (
-      <CountUp value={price} suffix="₾" />
-    );
+  const pr = copy[lang].pricing;
 
   return (
-    <section id="pricing" className="px-5 py-28 sm:py-36">
-      <div className="mx-auto max-w-6xl">
-        <SectionHead
-          number={t.number}
-          eyebrow={t.eyebrow}
-          title={t.title}
-          subtitle={t.subtitle}
-        />
+    <section id="pricing" className="mx-auto max-w-[1280px] px-5 py-16 md:px-8 md:py-[88px]">
+      <Kicker number={pr.number} label={pr.kicker} />
+      <h2 className="mb-[14px] max-w-[760px] text-[clamp(30px,3.6vw,52px)] font-extrabold leading-[1.05] tracking-[-0.02em]">
+        {pr.title}
+      </h2>
+      <p className="mb-[48px] max-w-[560px] text-[18px] text-[rgba(243,235,221,0.55)]">{pr.intro}</p>
 
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="show"
-          viewport={viewportOnce}
-          className="mt-16 grid items-start gap-6 lg:grid-cols-3"
-        >
-          {t.packages.map((pkg) => (
-            <div
-              key={pkg.name}
-              className={pkg.featured ? "lg:-translate-y-4" : ""}
-            >
-              <motion.div
-                variants={staggerItem}
-                whileTap={tapScaleSubtle}
-                className={`relative flex h-full flex-col rounded-3xl border p-8 ${
-                  pkg.featured
-                    ? "border-ink bg-ink text-mist shadow-2xl shadow-ink/20"
-                    : "border-line bg-card shadow-sm shadow-ink/[0.04]"
-                }`}
-              >
-                {pkg.featured && (
-                  <span className="absolute -top-3 left-8 rounded-full bg-accent px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-white">
-                    {t.popular}
-                  </span>
-                )}
-                <h3
-                  className={`text-sm font-semibold uppercase tracking-[0.16em] ${
-                    pkg.featured ? "text-mist-dim" : "text-ink-dim"
-                  }`}
-                >
-                  {pkg.name}
-                </h3>
-                <p
-                  className={`mt-4 font-serif text-5xl font-bold leading-none tracking-tight ${
-                    pkg.featured ? "text-mist" : "text-ink"
-                  }`}
-                >
-                  {renderPrice(pkg.priceFrom)}
-                </p>
-                <p
-                  className={`mt-2 text-xs uppercase tracking-[0.14em] ${
-                    pkg.featured ? "text-mist-dim" : "text-ink-dim"
-                  }`}
-                >
-                  {t.from}
-                </p>
-                <p
-                  className={`mt-5 text-sm leading-6 ${
-                    pkg.featured ? "text-mist-dim" : "text-ink-soft"
-                  }`}
-                >
-                  {pkg.description}
-                </p>
-                <ul className="mt-7 space-y-3 text-sm">
-                  {pkg.features.map((f) => (
-                    <li
-                      key={f}
-                      className={`flex items-start gap-2.5 ${
-                        pkg.featured ? "text-mist" : "text-ink"
-                      }`}
-                    >
-                      <Check />
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-                <Pressable
-                  href={contactHref}
-                  magnetic
-                  className={`mt-8 inline-flex min-h-[48px] items-center justify-center rounded-full px-6 text-sm font-semibold ${
-                    pkg.featured
-                      ? "bg-accent text-white shadow-lg shadow-accent/25"
-                      : "border border-ink/15 text-ink hover:bg-ink hover:text-paper transition-colors"
-                  }`}
-                >
-                  {t.cta}
-                </Pressable>
-              </motion.div>
+      <div className="grid grid-cols-1 items-start gap-[18px] lg:grid-cols-3">
+        {pr.tiers.map((tier) => (
+          <div
+            key={tier.name}
+            className={`flex flex-col rounded-[24px] bg-card px-8 py-9 ${
+              tier.popular
+                ? "border-[1.5px] border-[var(--ac)] shadow-[0_0_0_4px_rgba(227,162,60,0.08)]"
+                : "border border-[rgba(243,235,221,0.1)]"
+            }`}
+          >
+            {tier.popular && (
+              <span className="mb-[18px] inline-block self-start rounded-full bg-[var(--ac)] px-[14px] py-1.5 text-[12px] font-bold uppercase tracking-[0.08em] text-base">
+                {pr.popular}
+              </span>
+            )}
+            <h3 className="mb-4 text-[21px] font-bold">{tier.name}</h3>
+            <div className="mb-[18px] flex items-baseline gap-2">
+              <span className="text-[46px] font-extrabold tracking-[-0.02em]">{tier.price}</span>
+              <span className="text-[14px] text-[rgba(243,235,221,0.5)]">{pr.from}</span>
             </div>
-          ))}
-        </motion.div>
-
-        <p className="mt-10 text-center text-sm text-ink-dim">{t.note}</p>
+            <p className="mb-6 min-h-[66px] text-[15px] leading-[1.55] text-[rgba(243,235,221,0.58)]">
+              {tier.desc}
+            </p>
+            <div className="mb-[22px] h-px bg-[rgba(243,235,221,0.1)]" />
+            <div className="mb-[30px] flex flex-col gap-[13px]">
+              {tier.features.map((f) => (
+                <div
+                  key={f}
+                  className="flex items-start gap-[11px] text-[14.5px] leading-[1.45] text-[rgba(243,235,221,0.78)]"
+                >
+                  <span className="mt-px text-[14px] text-[var(--ac)]">✓</span>
+                  {f}
+                </div>
+              ))}
+            </div>
+            <a
+              href={whatsappLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`mt-auto rounded-full px-5 py-3.5 text-center text-[15px] font-bold no-underline transition-transform duration-200 hover:-translate-y-[2px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ac)] focus-visible:ring-offset-2 focus-visible:ring-offset-base ${
+                tier.popular
+                  ? "bg-[var(--ac)] text-base"
+                  : "border border-[rgba(243,235,221,0.16)] bg-[rgba(243,235,221,0.08)] text-cream"
+              }`}
+            >
+              {pr.cta}
+            </a>
+          </div>
+        ))}
       </div>
+
+      <p className="mt-[28px] max-w-[640px] text-[14.5px] text-[rgba(243,235,221,0.45)]">{pr.note}</p>
     </section>
   );
 }

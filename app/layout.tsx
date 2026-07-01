@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Noto_Sans_Georgian, Noto_Serif_Georgian } from "next/font/google";
+import { Noto_Sans_Georgian, Noto_Serif_Georgian, Space_Mono } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/studio/SmoothScroll";
 import { copy } from "@/lib/copy";
@@ -13,6 +13,13 @@ const notoGeorgian = Noto_Sans_Georgian({
 const notoSerifGeorgian = Noto_Serif_Georgian({
   variable: "--font-noto-serif-georgian",
   subsets: ["georgian", "latin"],
+});
+
+// მიკრო-ლეიბლები (ინდექსები, "Web Studio", placeholder captions) — Space Mono
+const spaceMono = Space_Mono({
+  variable: "--font-space-mono",
+  subsets: ["latin"],
+  weight: ["400", "700"],
 });
 
 // Default metadata = Georgian (root /). /en overrides via its own page metadata.
@@ -149,9 +156,9 @@ export default function RootLayout({
   return (
     <html
       lang="ka"
-      className={`${notoGeorgian.variable} ${notoSerifGeorgian.variable} h-full scroll-smooth antialiased`}
+      className={`${notoGeorgian.variable} ${notoSerifGeorgian.variable} ${spaceMono.variable} h-full scroll-smooth antialiased`}
     >
-      <body className="min-h-full bg-paper font-sans text-ink antialiased">
+      <body className="min-h-full bg-base font-sans text-cream antialiased">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

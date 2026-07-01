@@ -1,87 +1,62 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import { motion, useMotionValueEvent, useScroll } from "motion/react";
-import Pressable from "@/components/motion/Pressable";
+import InkMark from "@/components/studio/InkMark";
 import LangToggle from "@/components/studio/LangToggle";
 import { whatsappLink } from "@/lib/site";
 import { copy, type Lang } from "@/lib/copy";
 
-const sectionIds = ["work", "pricing"] as const;
-
+// Sticky glass nav — logo lockup მარცხნივ, ლინკები + ენა + WhatsApp CTA მარჯვნივ.
+// backdrop-blur მუდმივია (არა scroll-triggered) — handoff-ის ზუსტი ქცევა.
 export default function Nav({ lang }: { lang: Lang }) {
-  const t = copy[lang].nav;
-  const navSections = sectionIds.map((id) => ({ id, label: t[id] }));
-  const homeHref = lang === "en" ? "/en#top" : "/#top";
-
-  const [scrolled, setScrolled] = useState(false);
-  const [active, setActive] = useState<string | null>(null);
-  const { scrollY } = useScroll();
-  useMotionValueEvent(scrollY, "change", (y) => setScrolled(y > 24));
-
-  useEffect(() => {
-    const targets = sectionIds
-      .map((id) => document.getElementById(id))
-      .filter((el): el is HTMLElement => el !== null);
-    if (targets.length === 0) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible) setActive(visible.target.id);
-      },
-      { rootMargin: "-40% 0px -50% 0px", threshold: [0, 0.25, 0.5, 1] }
-    );
-    targets.forEach((t) => observer.observe(t));
-    return () => observer.disconnect();
-  }, []);
+  const t = copy[lang];
+  const homeHref = lang === "en" ? "/en" : "/";
 
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-40 transition-[background-color,border-color] duration-300 ${
-        scrolled
-          ? "glass border-b border-line/70"
-          : "border-b border-transparent"
-      }`}
-    >
-      <nav className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3.5">
+    <nav className="sticky top-0 z-[60] border-b border-[rgba(243,235,221,0.09)] bg-[rgba(22,17,13,0.78)] backdrop-blur-[14px]">
+      <div className="mx-auto flex max-w-[1280px] items-center justify-between gap-3 px-4 py-3.5 md:gap-8 md:px-8">
+        {/* Logo lockup */}
         <a
           href={homeHref}
-          className="rounded-md text-base font-semibold tracking-tight text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-paper"
+          className="group flex items-center gap-[13px] text-cream no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ac)] focus-visible:ring-offset-4 focus-visible:ring-offset-base"
         >
-          ბესო<span className="text-accent">.</span>
+          <span className="inline-flex transition-transform duration-[350ms] ease-out group-hover:-translate-y-0.5">
+            <InkMark width={48} height={48} washDur="6s" />
+          </span>
+          <span className="flex flex-col leading-none">
+            <span className="font-serif text-[22px] font-bold tracking-[-0.01em]">ბესო</span>
+            <span className="mt-1 hidden whitespace-nowrap font-mono text-[9px] uppercase tracking-[0.24em] text-[rgba(243,235,221,0.42)] sm:block">
+              Web Studio · Kutaisi
+            </span>
+          </span>
         </a>
-        <div className="flex items-center gap-1 sm:gap-2">
-          {navSections.map((s) => (
-            <a
-              key={s.id}
-              href={`#${s.id}`}
-              className={`relative hidden rounded-full text-sm font-medium transition-colors sm:inline-block sm:px-3 sm:py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper ${
-                active === s.id ? "text-ink" : "text-ink-soft hover:text-ink"
-              }`}
-            >
-              {s.label}
-              {active === s.id && (
-                <motion.span
-                  layoutId="nav-active-indicator"
-                  className="absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full bg-accent"
-                  transition={{ type: "spring", stiffness: 500, damping: 35 }}
-                />
-              )}
-            </a>
-          ))}
+
+        {/* Right cluster */}
+        <div className="flex items-center gap-3 md:gap-[30px]">
+          <div className="hidden items-center gap-[30px] lg:flex">
+            {t.nav.map((n) => (
+              <a
+                key={n.href}
+                href={n.href}
+                className="border-b-[1.5px] border-transparent pb-1 text-[14.5px] font-medium text-[rgba(243,235,221,0.58)] no-underline transition-colors duration-200 hover:border-[var(--ac)] hover:text-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ac)] focus-visible:ring-offset-2 focus-visible:ring-offset-base"
+              >
+                {n.label}
+              </a>
+            ))}
+          </div>
+
+          <span className="hidden h-[22px] w-px bg-[rgba(243,235,221,0.13)] lg:block" />
+
           <LangToggle />
-          <Pressable
+
+          <a
             href={whatsappLink}
-            external
-            className="inline-flex min-h-[42px] items-center rounded-full bg-ink px-4 text-sm font-semibold text-paper transition-colors hover:bg-night-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 whitespace-nowrap rounded-full bg-cream px-4 py-[11px] text-[13px] font-bold text-base no-underline transition-[transform,background-color] duration-200 hover:-translate-y-px hover:bg-[var(--ac)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ac)] focus-visible:ring-offset-2 focus-visible:ring-offset-base md:gap-[9px] md:px-[21px] md:text-[14px]"
           >
-            {t.contact}
-          </Pressable>
+            <span className="h-[7px] w-[7px] rounded-full bg-base" />
+            {t.navCta}
+          </a>
         </div>
-      </nav>
-    </header>
+      </div>
+    </nav>
   );
 }
